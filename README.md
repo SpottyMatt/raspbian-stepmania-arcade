@@ -64,7 +64,7 @@ Installing StepMania
 
 `make stepmania-install`
 
-1. Installs the built StepMania to `/usr/local/stepmania/stepmania`
+1. Installs the built StepMania to `/usr/local/stepmania-5.2/stepmania`
 2. Sets up the current user to automatically start StepMania on login
 3. Installs a reasonable StepMania configuration for Raspberry pi
 
