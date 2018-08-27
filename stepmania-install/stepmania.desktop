@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Stepmania
+Comment=Autolaunch Stepmania on Login
+Exec=/bin/bash -c 'unclutter -display :0 -noevents -grab & /usr/local/stepmania-5.2/stepmania; pkill unclutter'
+Terminal=false
+Type=Application
+NoDisplay=false
+
