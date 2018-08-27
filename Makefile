@@ -3,6 +3,7 @@ all:
 	$(MAKE) system-prep
 	$(MAKE) stepmania-prep
 	$(MAKE) stepmania-build
+	$(MAKE) stepmania-install
 
 .PHONY: system-prep
 system-prep:
@@ -38,6 +39,10 @@ system-prep:
 		yasm \
 		zlib1g-dev
 	sudo apt-get autoremove -y
+	sudo mkdir -p /usr/local/stepmania-5.2
+	sudo chmod a+rw /usr/local/stepmania-5.2
+	chmod a+x ./merge-config.sh
+	./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
 
 .PHONY: stepmania-prep
 .ONESHELL:
@@ -55,10 +60,23 @@ stepmania-prep:
 	        -DWITH_SSE2=0 \
 	        -DWITH_MINIMAID=0 \
 	        -DWITH_FULL_RELEASE=1 \
+		-DCMAKE_BUILD_TYPE=Release \
 	        -DARM_CPU=1
 	cmake .
+	git reset --hard origin/master
 
 .PHONY: stepmania-build
 stepmania-build:
 	$(MAKE) --dir stepmania
 
+.PHONY: stepmania-install
+stepmania-install:
+	$(MAKE) --dir stepmania install
+	mkdir -p "$(HOME)/stepmania-5.0/Save"
+	touch "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
+	./merge-config.sh ./stepmania-install/Preferences.ini "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
+
+.PHONY: overclock-apply
+overclock-apply:
+	chmod a+x ./performance-tune/overclock-pi3.sh
+	./performance-tune/overclock-pi3.sh
