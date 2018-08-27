@@ -80,9 +80,6 @@ The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I 
 | sdram_freq           | 450     | 550        |
 | over_voltage         | 0       | 3          |
 | over_voltage_sdram   | 0       | 3          |
-| over_voltage_sdram_c | 0       | 3          |
-| over_voltage_sdram_i | 0       | 3          |
-| over_voltage_sdram_p | 0       | 3          |
 
 
 ### Raspberry Pi 3B+
@@ -94,9 +91,6 @@ The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I 
 | sdram_freq           | 500     |            |
 | over_voltage         | 0       |            |
 | over_voltage_sdram   | 0       |            |
-| over_voltage_sdram_c | 0       |            |
-| over_voltage_sdram_i | 0       |            |
-| over_voltage_sdram_p | 0       |            |
 
 USB Audio
 =========================
