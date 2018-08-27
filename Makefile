@@ -77,8 +77,10 @@ stepmania-install:
 	mkdir -p "$(HOME)/stepmania-5.0/Save"
 	touch "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
 	./merge-config.sh ./stepmania-install/Preferences.ini "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
+	cp -f ./stepmania-install/launch.sh "$(HOME)/.stepmania-5.0/"
+	chmod a+x "$(HOME)/.stepmania-5.0/launch.sh"
 	mkdir -p "$(HOME)/.config/autostart"
-	cp ./stepmania-install/stepmania.desktop "$(HOME)/.config/autostart/"
+	cp -f ./stepmania-install/stepmania.desktop "$(HOME)/.config/autostart/"
 
 .PHONY: overclock-apply
 overclock-apply:

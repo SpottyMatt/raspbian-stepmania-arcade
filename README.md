@@ -81,7 +81,6 @@ The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I 
 | over_voltage         | 0       | 3          |
 | over_voltage_sdram   | 0       | 3          |
 
-
 ### Raspberry Pi 3B+
 
 | Setting              | Default | Max Stable |
@@ -133,3 +132,18 @@ Build StepMania
 ### `make overclock-apply`
 
 Allow applying probably-OK (but warranty-voiding) overclock settings to the Raspberry Pi, for improved StepMania performance.
+
+Performance
+-------------------------
+
+### Rasbperry Pi 3B
+
+| Screen Resolution | Texture Size | Overclocked? | Framerate |
+| ----------------- | ------------ | ------------ | --------- |
+| 1280 x 720        | 512          | Yes          | 45        |
+
+### Rasbperry Pi 3B+
+
+| Screen Resolution | Texture Size | Overclocked? | Framerate |
+| ----------------- | ------------ | ------------ | --------- |
+| 1680 x 1050       | 512          | No           | 32        |
