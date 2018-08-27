@@ -13,6 +13,7 @@ For all I know this might destroy your Rasbperry Pi. Don't use any of this yet.
 2. [Quick Start](#quick-start)
 3. [Overclocking](#overclocking)
 4. [USB Audio](#usb-audio)
+5. [Notes](#notes)
 
 Prerequisites
 =========================
@@ -99,3 +100,42 @@ The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I 
 
 USB Audio
 =========================
+
+
+Notes
+=========================
+
+Make Targets
+-------------------------
+
+The intended use of this `Makefile` is
+
+1. `make`
+2. `make overclock-apply`
+
+If you _want_ to do some of the tasks individually, they are:
+
+#### `make system-prep`
+
+1. Install build dependencies for StepMania
+2. Prepare StepMania installation directory
+3. Configure `/boot/config.txt` with non-overclock settings (including enabling OpenGL)
+
+### `make stepmania-prep`
+
+1. Patch StepMania to support building on ARM
+2. Run `cmake` to prepare StepMania to build
+
+### `make stepmania-build`
+
+Build StepMania
+
+### `make stepmania-install`
+
+1. `make install` StepMania to `/usr/local`
+2. Set up StepMania to start automatically on login.
+3. Set some StepMania `Preferences.ini` settings.
+
+### `make overclock-apply`
+
+Allow applying probably-OK (but warranty-voiding) overclock settings to the Raspberry Pi, for improved StepMania performance.
