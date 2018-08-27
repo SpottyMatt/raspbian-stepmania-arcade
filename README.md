@@ -9,15 +9,10 @@ Under Construction
 For all I know this might destroy your Rasbperry Pi. Don't use any of this yet.
 
 
-1. Prerequisites
-2. Quick Start
-3. Preparation
-	1. Preparing the Pi to Build StepMania
-	2. Preparing StepMania to be Built
-4. Building StepMania
-5. Installing StepMania
-6. Overclocking
-7. USB Audio
+1. [Prerequisites](#prerequisites)
+2. [Quick Start](#quick-start)
+3. [Overclocking](#overclocking)
+4. [USB Audio](#usb-audio)
 
 Prerequisites
 =========================
@@ -42,46 +37,13 @@ All of the automatic steps are driven by the `make` command-line tool.
 Quick Start
 =========================
 
-Just run `make` and let it go. It'll take around 2 hours.
+1. Run `make`.
+2. Wait ~2 hours.
+3. Run `make overclock-apply`
+4. Reboot
+5. Yay, StepMania automatically starts.
 
-When it finishes, you'll get to make overclocking decisions and wrestle with USB sound.
-
-Preparation
-=========================
-
-Preparing the Pi to Build StepMania
--------------------------
-
-`make system-prep`
-
-Installs dependencies and configures the Raspberry Pi to be able to build StepMania.
-
-Will apply some settings to help ensure the Pi runs well with StepMania.
-These are not overclock settings and will not void the Pi's warranty.
-Related Reading: https://www.raspberrypi.org/documentation/configuration/config-txt/
-
-Preparing StepMania to be Built
--------------------------
-
-`make stepmania-prep`
-
-Assuming `make system-prep` completed successfully, prepares StepMania source code to be built.
-
-Building StepMania
-=========================
-
-`make stepmania-build`
-
-Builds the StepMania software. If this works, then you can _technically_ run StepMania on your Pi!
-
-Installing StepMania
-=========================
-
-`make stepmania-install`
-
-1. Installs the built StepMania to `/usr/local/stepmania-5.2/stepmania`
-2. Sets up the current user to automatically start StepMania on login
-3. Installs a reasonable StepMania configuration for Raspberry pi
+Now head down to the [USB Audio](#usb-audio) section to get sound working.
 
 Overclocking
 =========================
