@@ -115,7 +115,7 @@ The intended use of this `Makefile` is
 
 If you _want_ to do some of the tasks individually, they are:
 
-#### `make system-prep`
+### `make system-prep`
 
 1. Install build dependencies for StepMania
 2. Prepare StepMania installation directory
