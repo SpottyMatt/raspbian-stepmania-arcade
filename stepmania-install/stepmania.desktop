@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Stepmania
 Comment=Autolaunch Stepmania on Login
-Exec=~/.stepmania-5.0/launch.sh
+Exec=su ${RUNUSER} -c '/home/${RUNUSER}/.stepmania-5.0/launch.sh'
 Terminal=false
 Type=Application
 NoDisplay=false

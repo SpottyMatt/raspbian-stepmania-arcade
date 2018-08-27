@@ -20,16 +20,17 @@ function confirm {
 }
 
 cat << EOF
-##########################################################
-#                                                        #
-#   OVERCLOCK WARNING                                    #
-#                                                        #
-#   1. Overclocking can break your Pi                    #
-#   2. Selecting the WRONG overclock can break your pi   #
-#                                                        #
-#   Are you sure you want to continue?                   #
-#                                                        #
-##########################################################
+###########################################################
+#                                                         #
+#   OVERCLOCK WARNING                                     #
+#                                                         #
+#   1. Overclocking can break your Pi.                    #
+#   2. This overclock WILL void your warranty.            #
+#   3. Selecting the WRONG overclock can break your pi.   #
+#                                                         #
+#   Are you sure you want to continue?                    #
+#                                                         #
+###########################################################
 
 EOF
 
@@ -55,13 +56,14 @@ while true; do
 done
 
 cat << EOF
-##########################################################
-#                                                        #
-#   OVERCLOCK WARNING                                    #
-#                                                        #
-#   Selecting the WRONG overclock can break your pi      #
-#                                                        #
-##########################################################
+###########################################################
+#                                                         #
+#   OVERCLOCK WARNING                                     #
+#                                                         #
+#   1. This overclock WILL void your warranty.            #
+#   2. Selecting the WRONG overclock can break your pi.   #
+#                                                         #
+###########################################################
 
 EOF
 
@@ -70,5 +72,5 @@ if ! confirm "Is this really a Raspberry Pi ${WHICHPI}?"; then
 fi
 
 
-./merge-config.sh ./raspi-${WHICHPI}-oc.config
+sudo ./merge-config.sh ./performance-tune/raspi-${WHICHPI}-oc.config /boot/config.txt
 

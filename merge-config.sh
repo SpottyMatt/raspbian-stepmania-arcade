@@ -29,6 +29,8 @@ if ! [ -e "${TARGET_CONFIG}" ]; then
 	exit 1
 fi
 
+echo -e "Merging configuration:\n\tSource : ${SOURCE_CONFIG}\n\tTarget : ${TARGET_CONFIG}"
+
 while read line; do
 	if [ "x" = "x${line}" ]; then
 		continue
@@ -38,7 +40,7 @@ while read line; do
 	KEY=$(echo "${PAIR}" | awk -F'=' '{print $1}' )
 	VALUE=$(echo "${PAIR}" | awk -F'=' '{print $2}' )
 
-	echo "Merging [${KEY}=${VALUE}] into ${TARGET_CONFIG}..."
+	echo "${KEY}=${VALUE}"
 
 	if grep --quiet --regexp="^${KEY} *=" "${TARGET_CONFIG}"; then
 
@@ -48,14 +50,14 @@ while read line; do
 
 		if [ "${OLDVALUE}" != "${VALUE}" ]; then
 			echo -e "\t~ Updated line in ${TARGET_CONFIG}:\n\t\tOld : ${KEY}=${OLDVALUE}\n\t\tNew : ${KEY}=${VALUE}"
-			sudo sed -i "s/${KEY} *=.*/${line}/" "${TARGET_CONFIG}"
+			sed -i "s/${KEY} *=.*/${line}/" "${TARGET_CONFIG}"
 		else
 			echo -e "\to Already set!"
 		fi
 
 	else
 		echo -e "\t+ Added line to ${TARGET_CONFIG}:\n\t\t${KEY}=${VALUE}"
-		echo "${line}" | sudo tee -a "${TARGET_CONFIG}" > /dev/null
+		echo "${line}" | tee -a "${TARGET_CONFIG}" > /dev/null
 	fi
 done < "${SOURCE_CONFIG}"
 

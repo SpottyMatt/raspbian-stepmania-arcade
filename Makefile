@@ -44,7 +44,7 @@ system-prep:
 	sudo mkdir -p /usr/local/stepmania-5.2
 	sudo chmod a+rw /usr/local/stepmania-5.2
 	chmod a+x ./merge-config.sh
-	./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
+	sudo ./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
 
 .PHONY: stepmania-prep
 .ONESHELL:
@@ -80,7 +80,7 @@ stepmania-install:
 	cp -f ./stepmania-install/launch.sh "$(HOME)/.stepmania-5.0/"
 	chmod a+x "$(HOME)/.stepmania-5.0/launch.sh"
 	mkdir -p "$(HOME)/.config/autostart"
-	cp -f ./stepmania-install/stepmania.desktop "$(HOME)/.config/autostart/"
+	cat stepmania-install/stepmania.desktop | RUNUSER=$(shell whoami) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
 
 .PHONY: overclock-apply
 overclock-apply:
