@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+# Usage:
+#	merge-config.sh <source> <target>
+#
+# Given a config file full of key=value lines,
+# read a source file and add or update lines in a
+# target file so that the target file contains the source settings.
+#
+# This doesn't work for keys that are allowed to be duplicated, e.g. if the following is valid:
+#
+#	some_thing=value1
+#	some_thing=value2
+#	some_thing=value3
+#
+# then this script will probably BREAK the config file if used to set some_thing.
+
+
 SOURCE_CONFIG=$1
 TARGET_CONFIG=$2
 
