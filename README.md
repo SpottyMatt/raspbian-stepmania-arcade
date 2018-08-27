@@ -38,11 +38,11 @@ All of the automatic steps are driven by the `make` command-line tool.
 Quick Start
 =========================
 
-1. Run `make`.
-2. Wait ~2 hours.
-3. Run `make overclock-apply`
-4. Reboot
-5. Yay, StepMania automatically starts.
+1. Run `make`
+2. Wait ~2 hours
+3. Reboot
+4. Yay, StepMania automatically starts
+5. (Optional) Run `make overclock-apply` for better performance
 
 Now head down to the [USB Audio](#usb-audio) section to get sound working.
 
