@@ -36,6 +36,7 @@ system-prep:
 		libxrandr-dev \
 		libxtst-dev \
 		mesa-common-dev \
+		mesa-utils \
 		yasm \
 		zlib1g-dev
 	sudo apt-get autoremove -y
