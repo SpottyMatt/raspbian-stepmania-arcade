@@ -8,7 +8,18 @@ Under Construction
 
 For all I know this might destroy your Rasbperry Pi. Don't use any of this yet.
 
-Getting Started
+
+1. Prerequisites
+2. Quick Start
+3. Preparation
+	1. Preparing the Pi to Build StepMania
+	2. Preparing StepMania to be Built
+4. Building StepMania
+5. Installing StepMania
+6. Overclocking
+7. USB Audio
+
+Prerequisites
 =========================
 
 **You** must provide the following:
@@ -35,11 +46,13 @@ Just run `make` and let it go. It'll take around 2 hours.
 
 When it finishes, you'll get to make overclocking decisions and wrestle with USB sound.
 
-Preparing to Build StepMania
+Preparation
 =========================
 
-`make system-prep`
+Preparing the Pi to Build StepMania
 -------------------------
+
+`make system-prep`
 
 Installs dependencies and configures the Raspberry Pi to be able to build StepMania.
 
@@ -47,8 +60,10 @@ Will apply some settings to help ensure the Pi runs well with StepMania.
 These are not overclock settings and will not void the Pi's warranty.
 Related Reading: https://www.raspberrypi.org/documentation/configuration/config-txt/
 
-`make stepmania-prep`
+Preparing StepMania to be Built
 -------------------------
+
+`make stepmania-prep`
 
 Assuming `make system-prep` completed successfully, prepares StepMania source code to be built.
 
@@ -87,18 +102,38 @@ To automatically apply incluced, probably-OK overclock settings and **VOID YOUR 
 
 It will ask which Raspberry Pi you have. If you answer incorrectly you may end up installing overclock settings that will permanently ruin your Pi when you reboot.
 
-### Manual Overclocking
+Manual Overclocking
+-------------------------
 
 In case you want to twiddle the overclock settings by hand, here's a helpful chart.
 The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I found were "just below" unstable on _my_ Pis.
 
-| Setting              | Default - Pi 3B | Max Stable - Pi 3B | Default - Pi 3B+ | Max Stable - Pi 3B+ |
-| -------------------- | --------------- | ------------------ | ---------------- | ------------------- |
-| arm_freq             | 1200            | 1400               | 1400             |                     |
-| core_freq            | 400             | 500                | 400              |                     |
-| sdram_freq           | 450             | 550                | 500              |                     |
-| over_voltage         | 0               | 3                  | 0                |                     |
-| over_voltage_sdram   | 0               | 3                  | 0                |                     |
-| over_voltage_sdram_c | 0               | 3                  | 0                |                     |
-| over_voltage_sdram_i | 0               | 3                  | 0                |                     |
-| over_voltage_sdram_p | 0               | 3                  | 0                |                     |
+### Raspberry Pi 3B
+
+| Setting              | Default | Max Stable |
+| -------------------- | ------- | ---------- |
+| arm_freq             | 1200    | 1400       |
+| core_freq            | 400     | 500        |
+| sdram_freq           | 450     | 550        |
+| over_voltage         | 0       | 3          |
+| over_voltage_sdram   | 0       | 3          |
+| over_voltage_sdram_c | 0       | 3          |
+| over_voltage_sdram_i | 0       | 3          |
+| over_voltage_sdram_p | 0       | 3          |
+
+
+### Raspberry Pi 3B+
+
+| Setting              | Default | Max Stable |
+| -------------------- | ------- | ---------- |
+| arm_freq             | 1400    |            |
+| core_freq            | 400     |            |
+| sdram_freq           | 500     |            |
+| over_voltage         | 0       |            |
+| over_voltage_sdram   | 0       |            |
+| over_voltage_sdram_c | 0       |            |
+| over_voltage_sdram_i | 0       |            |
+| over_voltage_sdram_p | 0       |            |
+
+USB Audio
+=========================
