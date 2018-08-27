@@ -65,6 +65,22 @@ To automatically apply incluced, probably-OK overclock settings and **VOID YOUR 
 
 It will ask which Raspberry Pi you have. If you answer incorrectly you may end up installing overclock settings that will permanently ruin your Pi when you reboot.
 
+`force_turbo` or not?
+-------------------------
+
+If your Raspberry pi will only ever be on when it is being used to run StepMania (as a true arcade console), you should set `force_turbo=1` in `/boot/config.txt`.
+
+This will
+
+1. Void the warranty
+2. Cause the Pi to generate more heat than normal
+3. Cause the Pi to consume more power than normal
+4. Esnure the Pi is always running at peak performance
+
+If you just want to play StepMania on your Pi but it will frequently be turned on and _not_ running anything resource-intensive, you should _not_ set `force_turbo=1`.
+
+You can run `make no-turbo` or edit `/boot/config.txt` by hand to remove any `force_turbo` lines.
+
 Manual Overclocking
 -------------------------
 
@@ -85,11 +101,11 @@ The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I 
 
 | Setting              | Default | Max Stable |
 | -------------------- | ------- | ---------- |
-| arm_freq             | 1400    |            |
-| core_freq            | 400     |            |
-| sdram_freq           | 500     |            |
-| over_voltage         | 0       |            |
-| over_voltage_sdram   | 0       |            |
+| arm_freq             | 1400    | 1500       |
+| core_freq            | 400     | 600        |
+| sdram_freq           | 500     | 700        |
+| over_voltage         | 0       | 3          |
+| over_voltage_sdram   | 0       | 3          |
 
 USB Audio
 =========================
@@ -132,6 +148,12 @@ Build StepMania
 ### `make overclock-apply`
 
 Allow applying probably-OK (but warranty-voiding) overclock settings to the Raspberry Pi, for improved StepMania performance.
+
+### `make no-turbo`
+
+Remove the `force_turbo=1` setting from `/boot/config.txt`.
+
+Use this if you expect the Pi to be turned on and NOT running StepMania for significant periods of its life.
 
 Performance
 -------------------------

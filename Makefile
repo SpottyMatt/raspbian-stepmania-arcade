@@ -86,3 +86,7 @@ stepmania-install:
 overclock-apply:
 	chmod a+x ./performance-tune/overclock-pi3.sh
 	./performance-tune/overclock-pi3.sh
+
+.PHONY: no-turbo
+no-turbo:
+	sudo ./merge-config.sh ./performance-tune/no-turbo.config /boot/config.txt
