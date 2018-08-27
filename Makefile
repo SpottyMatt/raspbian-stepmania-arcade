@@ -1,6 +1,7 @@
 .PHONY: all
 all:
 	$(MAKE) system-prep
+	$(MAKE) stepmania-prep
 	$(MAKE) stepmania-build
 
 .PHONY: system-prep
@@ -38,9 +39,9 @@ system-prep:
 		zlib1g-dev
 	sudo apt-get autoremove -y
 
-.PHONY: stepmania-build
+.PHONY: stepmania-prep
 .ONESHELL:
-stepmania-build:
+stepmania-prep:
 	git submodule init
 	git submodule update
 	cd stepmania
@@ -48,6 +49,7 @@ stepmania-build:
 	git submodule update
 	git fetch
 	git merge origin/master
+	git apply ../stepmania-build/raspi-3b-arm.patch && git commit --author="raspian-3b-stepmania-arcade <spottymatt@gmail.com>" -a -m "Patched to enable building on ARM processors with -DARM_CPU=1"
 	cmake -G "Unix Makefiles" \
 	        -DWITH_CRASH_HANDLER=0 \
 	        -DWITH_SSE2=0 \
@@ -55,3 +57,8 @@ stepmania-build:
 	        -DWITH_FULL_RELEASE=1 \
 	        -DARM_CPU=1
 	cmake .
+
+.PHONY: stepmania-build
+stepmania-build:
+	$(MAKE) --dir stepmania
+
