@@ -171,3 +171,4 @@ Performance
 | Screen Resolution | Texture Size | Overclocked? | Framerate |
 | ----------------- | ------------ | ------------ | --------- |
 | 1680 x 1050       | 512          | No           | 32        |
+| 1680 x 1050       | 512          | Yes          | 37        |
