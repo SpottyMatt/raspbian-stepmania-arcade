@@ -1,14 +1,19 @@
-index 7ea1885b73..93eab5b949 100644
+index 7ea1885b73..55136a66df 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -128,6 +128,10 @@ sm_add_compile_definition("${SM_EXE_NAME}" $<$<CONFIG:RelWithDebInfo>:RELWITHDEB
+@@ -128,6 +128,14 @@ sm_add_compile_definition("${SM_EXE_NAME}" $<$<CONFIG:RelWithDebInfo>:RELWITHDEB
 
  set(SM_COMPILE_FLAGS "")
 
 +if(ARM_CPU)
-+    set(SM_COMPILE_FLAGS "${SM_COMPILE_FLAGS} -mcpu=cortex-a53 -mfloat-abi=hard -mfpu=neon-fp-armv8 -O2 -mtune=cortex-a53")
++  set(SM_COMPILE_FLAGS "${SM_COMPILE_FLAGS} -mcpu=${ARM_CPU} -mtune=${ARM_CPU} -O2")
++endif()
++
++if(ARM_FPU)
++  set(SM_COMPILE_FLAGS "${SM_COMPILE_FLAGS} -mfloat-abi=hard -mfpu=${ARM_FPU}")
 +endif()
 +
  if(WITH_SSE2)
    if(MSVC)
      set(SM_COMPILE_FLAGS "${SM_COMPILE_FLAGS} /arch:SSE2")
+

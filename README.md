@@ -116,6 +116,10 @@ USB Audio
 Notes
 =========================
 
+1. [Make Targets](#make-targets)
+2. [Performance Benchmarks](#performance-benchmarks)
+3. [Building for Other Raspberry Pi Models](#building-for-other-raspberry-pi-models)
+
 Make Targets
 -------------------------
 
@@ -172,3 +176,20 @@ Performance
 | ----------------- | ------------ | ------------ | --------- |
 | 1680 x 1050       | 512          | No           | 32        |
 | 1680 x 1050       | 512          | Yes          | 37        |
+
+Building for Other Raspberry Pi Models
+-------------------------
+
+If you look at [`raspi-3b-arm.patch`](stepmania-build/raspi-3b-arm.patch), you'll see there are two variables that really matter for building StepMania:
+
+1. `ARM_CPU`
+2. `ARM_FPU`
+
+Those are set in the `Makefile` to the correct values for the Raspberry Pi 3B/3B+.
+
+See this excellent gist: [GCC compiler optimization for ARM-based systems](https://gist.github.com/fm4dd/c663217935dc17f0fc73c9c81b0aa845) for more information on compiling with GCC on Raspberry Pi.
+
+In particular, it's got tables of the `ARM_CPU` and `ARM_FPU` values for other Raspberry Pi models.
+Who knows, they might work! The regular 3B was just powerful enough to run StepMania acceptably; older models may struggle to perform.
+
+Edit your `Makefile` and give it a try!
