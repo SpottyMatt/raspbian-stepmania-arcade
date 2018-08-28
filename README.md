@@ -75,7 +75,7 @@ This will
 1. Void the warranty
 2. Cause the Pi to generate more heat than normal
 3. Cause the Pi to consume more power than normal
-4. Esnure the Pi is always running at peak performance
+4. Ensure the Pi is always running at peak performance
 
 If you just want to play StepMania on your Pi but it will frequently be turned on and _not_ running anything resource-intensive, you should _not_ set `force_turbo=1`.
 
