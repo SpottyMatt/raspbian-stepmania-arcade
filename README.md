@@ -59,7 +59,7 @@ They might work for yours, too. You can void your warranty and break the hardwar
 
 I broke my Pi 3B by overlocking it too much, and it isn't stable anymore even with the overclocking configuration disabled.
 
-To automatically apply incluced, probably-OK overclock settings and **VOID YOUR WARRANTY**, run
+To automatically apply included, probably-OK overclock settings and **VOID YOUR WARRANTY**, run
 
 `make overclock-apply`
 
