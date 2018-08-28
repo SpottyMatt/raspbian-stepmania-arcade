@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Asks you which Raspberry Pi you have,
+# and applies probably-safe overclock settings.
+#
+# Warns you repeatedly that you WILL void your warranty and
+# MAY break your Pi.
+
 function confirm {
 
 	while true; do
