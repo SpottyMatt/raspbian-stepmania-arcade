@@ -77,6 +77,8 @@ This will
 3. Cause the Pi to consume more power than normal
 4. Ensure the Pi is always running at peak performance
 
+This is the default when using `make overclock-apply`.
+
 If you just want to play StepMania on your Pi but it will frequently be turned on and _not_ running anything resource-intensive, you should _not_ set `force_turbo=1`.
 
 You can run `make no-turbo` or edit `/boot/config.txt` by hand to remove any `force_turbo` lines.
