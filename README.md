@@ -69,6 +69,20 @@ If you just want to play StepMania on your Pi but it will frequently be turned o
 
 You can run `make no-turbo` or edit `/boot/config.txt` by hand to remove any `force_turbo` lines.
 
+Recovering From a Bad Overclock
+-------------------------
+
+If your Pi does not boot after applying overclock settings, or crashes shortly after booting,
+
+1. Turn it off!
+2. Get ready to press the "Shift" key.
+3. Turn it on.
+4. When the Raspberry on the white screen appears, press the "Shift" key.
+5. Press `e` to edit the `config.txt`
+6. Scroll to the bottom and remove the lines that have to do with overclocking. Look in the [`performance-tune`](performance-tune) directory to see which options were added by this process.
+7. Press `Esc` to boot and confirm that your Pi still works.
+8. If you still want to overclock, proceed to the "Manual Overclocking" section below. Refer to the files in the `performance-tune` directory as upper limits, and stay below them.
+
 Manual Overclocking
 -------------------------
 
