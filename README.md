@@ -193,7 +193,7 @@ Remove the `force_turbo=1` setting from `/boot/config.txt`.
 
 Use this if you expect the Pi to be turned on and NOT running StepMania for significant periods of its life.
 
-Performance
+Performance Benchmarks
 -------------------------
 
 ### Rasbperry Pi 3B
