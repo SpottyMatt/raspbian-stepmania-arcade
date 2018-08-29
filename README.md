@@ -20,24 +20,15 @@ Prerequisites
 2. An installed & working [Raspian](https://www.raspberrypi.org/downloads/raspbian/) operating system, Stretch (v9) or later.
 3. A [USB sound card that works out-of-the-box with the Raspberry Pi](https://learn.adafruit.com/usb-audio-cards-with-a-raspberry-pi?view=all)
 
-In order to get your Raspberry Pi working as an unattended StepMania console, this guide will help you achive the following things:
-
-1. Prepare to build StepMania on a Raspberry Pi
-2. Build and install StepMania
-3. Configure StepMania for automatic startup
-4. Overclock the Raspberry Pi to improve StepMania performance
-5. Enable USB Sound by default
-
-All of the steps are driven by the `make` command-line tool.
-
 Quick Start
 =========================
 
-1. Run `make`
-2. Wait ~2 hours
-3. Reboot
-4. Yay, StepMania automatically starts
-5. (Optional) Run `make overclock-apply` for better performance
+1. Clone this repository
+2. Run `make`
+3. Wait ~2 hours
+4. Reboot
+5. Yay, StepMania automatically starts
+6. (Optional) Run `make overclock-apply` for better performance
 
 Now head down to the [USB Audio](#usb-audio) section if sound isn't coming out of your USB sound card.
 
