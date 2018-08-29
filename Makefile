@@ -20,6 +20,7 @@ system-prep:
 		libcairo2-dev \
 		libgdk-pixbuf2.0-dev \
 		libglew1.5-dev \
+		libglib2.0-dev \
 		libglu1-mesa-dev \
 		libgtk2.0-dev \
 		libjack0 \
