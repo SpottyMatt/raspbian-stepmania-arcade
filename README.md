@@ -24,16 +24,17 @@ Prerequisites
 	1. 3B
 	2. 3B+
 2. An installed & working [Raspian](https://www.raspberrypi.org/downloads/raspbian/) operating system, Stretch (v9) or later.
+3. A [USB sound card that works out-of-the-box with the Raspberry Pi](https://learn.adafruit.com/usb-audio-cards-with-a-raspberry-pi?view=all)
 
 In order to get your Raspberry Pi working as an unattended StepMania console, this guide will help you achive the following things:
 
-1. Prepare to build StepMania on a Raspberry Pi (Automatic)
-2. Build and install StepMania (Automatic)
-3. Configure StepMania for automatic startup (Automatic)
-4. Overclock the Raspberry Pi to improve StepMania performance (Automatic)
-5. Get USB sound working so the songs don't sound awful (Manual)
+1. Prepare to build StepMania on a Raspberry Pi
+2. Build and install StepMania
+3. Configure StepMania for automatic startup
+4. Overclock the Raspberry Pi to improve StepMania performance
+5. Enable USB Sound by default
 
-All of the automatic steps are driven by the `make` command-line tool.
+All of the steps are driven by the `make` command-line tool.
 
 Quick Start
 =========================
@@ -44,7 +45,7 @@ Quick Start
 4. Yay, StepMania automatically starts
 5. (Optional) Run `make overclock-apply` for better performance
 
-Now head down to the [USB Audio](#usb-audio) section to get sound working.
+Now head down to the [USB Audio](#usb-audio) section if sound isn't coming out of your USB sound card.
 
 Overclocking
 =========================
@@ -112,6 +113,38 @@ The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I 
 USB Audio
 =========================
 
+The Raspberry Pi uses its built-in headphone jack or the HDMI cable as the default sound output device.
+The hardware that drives these is not very capable. StepMania's songs will sound scratch.
+To have good sound quality, you must use a USB sound card.
+
+Getting this USB sound card working, and then working _as the default sound device_ can be hard.
+Do yourself a favor and buy one that is known to work out-of-the-box with the Raspberry Pi.
+Adafruit [sells one](https://www.adafruit.com/product/1475), or you can trust reviews on some other marketplace like Amazon.
+
+Get USB Sound Working
+-------------------------
+
+Plug in your sound card. Use one or some combination of the following to try to activate it:
+
+1. Raspian GUI
+2. `raspi-config`
+3. `alsamixer`
+
+At this point it's just a "how to get USB sound card working on Linux" problem.
+
+* `dmesg` will show messages when you connect a USB device. Run `dmesg -w` and then plug the device in to watch it try to connect.
+* `lsusb` will show connected USB devices.
+* `aplay -l` will show recognized sound devices.
+
+Make USB Sound the Default
+-------------------------
+
+This was probably already done by the [`usb-audio-by-default.conf`](system-prep/usb-audio-by-default.conf) modprobe configuration being installed by the `system-prep` target.
+The key was to explicitly order all the devices, even the ones _you don't want and/or have blacklisted_, to ensure that USB is always "card 0".
+
+If you find that your Pi does _not_ default to putting sound out through the USB sound card... you're on your own.
+
+This is a great resource to start: https://raspberrypi.stackexchange.com/a/80075
 
 Notes
 =========================
