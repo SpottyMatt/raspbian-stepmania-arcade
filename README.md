@@ -108,7 +108,7 @@ USB Audio
 =========================
 
 The Raspberry Pi uses its built-in headphone jack or the HDMI cable as the default sound output device.
-The hardware that drives these is not very capable. StepMania's songs will sound scratch.
+The hardware that drives these is not very capable. StepMania's songs will sound scratchy.
 To have good sound quality, you must use a USB sound card.
 
 Getting this USB sound card working, and then working _as the default sound device_ can be hard.
