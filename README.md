@@ -14,7 +14,7 @@ Prerequisites
 
 **You** must provide the following:
 
-1. A supported Raspberry Pi model
+1. A supported [Raspberry Pi model](https://www.raspberrypi.org/products/)
 	1. 3B
 	2. 3B+
 2. An installed & working [Raspian](https://www.raspberrypi.org/downloads/raspbian/) operating system, Stretch (v9) or later.
