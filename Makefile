@@ -5,8 +5,21 @@ all:
 	$(MAKE) stepmania-build
 	$(MAKE) stepmania-install
 
+.PHONY: build-only
+build-only:
+	$(MAKE) build-prep
+	$(MAKE) stepmania-prep
+	$(MAKE) stepmania-build
+
 .PHONY: system-prep
 system-prep:
+	$(MAKE) build-prep
+	chmod a+x ./merge-config.sh
+	sudo ./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
+	sudo cp -fv ./system-prep/usb-audio-by-default.conf /etc/modprobe.d/.
+
+.PHONY: build-prep
+build-prep:
 	sudo sed -i 's/#deb-src/deb-src/g' /etc/apt/sources.list
 	sudo apt-get update
 	sudo apt-get install -y \
@@ -44,9 +57,7 @@ system-prep:
 	sudo apt-get autoremove -y
 	sudo mkdir -p /usr/local/stepmania-5.2
 	sudo chmod a+rw /usr/local/stepmania-5.2
-	chmod a+x ./merge-config.sh
-	sudo ./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
-	sudo cp -fv ./system-prep/usb-audio-by-default.conf /etc/modprobe.d/.
+
 
 .PHONY: stepmania-prep
 .ONESHELL:
