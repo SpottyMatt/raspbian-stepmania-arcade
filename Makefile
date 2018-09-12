@@ -11,6 +11,13 @@ build-only:
 	$(MAKE) stepmania-prep
 	$(MAKE) stepmania-build
 
+.PHONY: ci
+ci: SHORT_HASH=$(shell cd stepmania && git rev-parse --short HEAD)
+ci:
+	$(MAKE) build-only | tee "$(HOME)/stepmania-builds/stepmania-arm-$(SHORT_HASH).log"
+	mkdir -p "$(HOME)/stepmania-builds"
+	mv stepmania/stepmania "$(HOME)/stepmania-builds/stepmania-arm-$(SHORT_HASH)"
+
 .PHONY: system-prep
 system-prep:
 	$(MAKE) build-prep
