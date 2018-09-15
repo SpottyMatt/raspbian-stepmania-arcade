@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN git config --global user.name raspian-3b-stepmania-arcade && git config user.email "SpottyMatt@gmail.com"
 
 # build stepmania
-RUN make build-only
+RUN make -j2 build-only
 
 # install the built stepmania
 RUN make --dir stepmania install
