@@ -1,10 +1,10 @@
 ARG distro=stretch
 FROM resin/rpi-raspbian:$distro
 
-WORKDIR ${HOME}
-COPY . ${HOME}/
+WORKDIR /work
+COPY . /work/
 
-RUN ls -hal ${HOME}
+RUN ls -hal
 
 # build stepmania
 RUN make build-only
