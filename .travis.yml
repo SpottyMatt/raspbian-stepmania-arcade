@@ -1,0 +1,18 @@
+sudo: required
+services:
+- docker
+language: bash
+script:
+- |
+  echo "Updating Docker to have docker manifest command"
+  curl https://get.docker.com | sh
+  echo "Enabling docker client experimental features"
+  mkdir -p ~/.docker
+  echo '{ "experimental": "enabled" }' > ~/.docker/config.json
+  docker version
+# prepare qemu
+- docker run --rm --privileged multiarch/qemu-user-static:register --reset
+# build image
+- docker build --build-arg distro=stretch -t rpi-stepmania .
+# TODO: dump the output
+
