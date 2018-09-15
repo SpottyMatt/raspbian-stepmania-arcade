@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
 	build-essential \
 	git
 
+RUN git config --global user.name raspian-3b-stepmania-arcade && git config user.email "SpottyMatt@gmail.com"
+
 # build stepmania
 RUN make build-only
 
