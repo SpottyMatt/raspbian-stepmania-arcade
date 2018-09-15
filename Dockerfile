@@ -6,8 +6,8 @@ COPY . /work/
 
 # install make
 RUN apt-get update && apt-get install -y \
-	build-essential \
-	git
+	git \
+	make
 
 RUN git config --global user.name raspian-3b-stepmania-arcade && git config user.email "SpottyMatt@gmail.com"
 
