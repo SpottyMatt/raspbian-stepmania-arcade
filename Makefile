@@ -71,6 +71,7 @@ stepmania-prep:
 	git merge origin/master
 	git apply ../stepmania-build/raspi-3b-arm.patch && git commit --author="raspian-3b-stepmania-arcade <SpottyMatt@gmail.com>" -a -m "Patched to enable building on ARM processors with -DARM_CPU=XXX -DARM_FPU=XXX"
 	cmake -G "Unix Makefiles" \
+		-j4 \
 	        -DWITH_CRASH_HANDLER=0 \
 	        -DWITH_SSE2=0 \
 	        -DWITH_MINIMAID=0 \
