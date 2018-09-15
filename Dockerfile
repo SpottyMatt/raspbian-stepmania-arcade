@@ -7,7 +7,9 @@ COPY . /work/
 RUN ls -hal
 
 # install make
-RUN apt-get update && apt-get install -y build-essential
+RUN apt-get update && apt-get install -y \
+	build-essential \
+	git
 
 # build stepmania
 RUN make build-only
