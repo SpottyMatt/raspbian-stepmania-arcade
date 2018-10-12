@@ -7,7 +7,8 @@ Scripts & instructions to turn a Raspberry Pi 3B or 3B+ running Raspian into a [
 2. [Quick Start](#quick-start)
 3. [Overclocking](#overclocking)
 4. [USB Audio](#usb-audio)
-5. [Notes](#notes)
+5. [Controller Mapping](#controller-mapping)
+6. [Notes](#notes)
 
 Prerequisites
 =========================
@@ -144,6 +145,148 @@ The key was to explicitly order all the devices, even the ones _you don't want a
 If you find that your Pi does _not_ default to putting sound out through the USB sound card... you're on your own.
 
 This is a great resource to start: https://raspberrypi.stackexchange.com/a/80075
+
+Controller Mapping
+=========================
+
+On linux, the order that connected devices are listed is essentially random.
+You're supposed to map devices to specific names, and use those names instead.
+StepMania doesn't do this. It just reads the randomly-ordered device names.
+
+If you have more than one dance pad or controller, sometimes StepMania will swap them around.
+If these controllers are actually different devices and require different key mappings, this makes them not work.
+You'd have to re-map the controllers through the "Options" menu every time StepMania started.
+
+The included launch script offers a solution: You can put namned key mapping files in StepMania's `Save/Keymaps/` directory for each controller you have.
+The launch script will then figure out the order that StepMania sees your controllers and create a correct `Keymaps.ini` file for StepMania.
+
+Your controllers will always be mapped correctly.
+In addition, the controllers will be assigned to P1 and P2 in alphabetical order, so you'll always have the same controller being the first (or "left") player.
+
+Here's how:
+
+Map the Controller Normally
+-------------------------
+
+1. Connect only one controller/pad
+2. Reboot the machine
+3. Start StepMania
+4. Configure its key mappings through the "Options" menu, as the primary input for the primary controller
+
+Get the Controller Name
+-------------------------
+
+Run
+
+	ls -hal /dev/input/by-id | grep event-joystick
+
+To list all of your controllers and the `event` device they correspond to.
+
+If you have multiple controllers connected, you should see somethign like
+
+	usb-0079_USB_Gamepad-event-joystick -> ../event1
+	usb-©Microsoft_Corporation_Controller_05B30D7-event-joystick -> ../event2
+	usb-Sony_PLAYSTATION_R_3_Controller-event-joystick -> ../event4
+
+Identify the controller you care about. For example, if the PS3 controlelr is the one, that's `event4`.
+
+Now run
+
+	udevadm info /dev/input/event4 | awk -F'=' '/ID_SERIAL=(.*)/{print $2}
+
+To print out the device's "serial ID." In this case it was `Sony_PLAYSTATION_R_3_Controller`.
+
+Create a Named Keymap
+-------------------------
+
+Create the directory `~/.stepmania-5.0/Save/Keymaps` if it doesn't already exist. You can do this by running
+
+	mkdir -p ~/.stepmania-5.0/Save/Keymaps
+
+In that directory, create a file for the controller, named `<PRIORITY>-<CONTROLLER_NAME>.ini`.
+
+The "priority" determines which controller gets to be the first player or "left" dance pad, if there are multiple active controllers connected.
+
+To make the PS3 controller always the main/left/P1 controller, create `0-Sony_PLAYSTATION_R_3_Controller.ini`.
+
+Copy the contents of StepMania's `Keymaps.ini` into that file.
+
+Prepare the Named Keymap
+-------------------------
+
+StepMania's `Keymaps.ini` file might look like this:
+
+	[dance]
+	1_Back=Joy11_B17
+	1_Coin=
+	1_Down=Joy11_B2
+	1_EffectDown=
+	1_EffectUp=
+	1_Left=Joy11_B3
+	1_MenuDown=
+	1_MenuLeft=
+	1_MenuRight=
+	1_MenuUp=
+	1_Operator=
+	1_Right=Joy11_B4
+	1_Screenshot=
+	1_Select=
+	1_Start=Joy11_B18
+	1_Up=Joy11_B1
+	1_UpLeft=
+	1_UpRight=
+	2_Back=Joy12_B7
+	2_Coin=
+	2_Down=Joy12_B2
+	2_EffectDown=
+	2_EffectUp=
+	2_Left=Joy12_B1
+	2_MenuDown=
+	2_MenuLeft=
+	2_MenuRight=
+	2_MenuUp=
+	2_Operator=
+	2_Right=Joy12_B4
+	2_Screenshot=
+	2_Select=
+	2_Start=Joy12_B8
+	2_Up=Joy12_B3
+	2_UpLeft=
+	2_UpRight=
+
+Do the following:
+
+1. Remove the `[dance]` line
+2. Delete all lines that start with `2_`
+3. Delete all lines that don't have anything on the right of the `=`
+4. Change all `Joy1X_` mappings to `Joy10_`
+
+For the PS3 controller, it would look like this:
+
+`~/.stepmania-5.0/Save/Keymaps/0-Sony_PLAYSTATION_R_3_Controller.ini`:
+
+	1_Back=Joy10_B17
+	1_Down=Joy10_B2
+	1_Left=Joy10_B3
+	1_Right=Joy10_B4
+	1_Start=Joy10_B18
+	1_Up=Joy10_B1
+
+Repeat
+-------------------------
+
+Do this again for each controller you want to use.
+Make sure no other controllers are connected while you're setting each one up.
+When you're done, you can test it by running `~/.stepmania-5.0/launch.sh`.
+You should see a printout like this:
+
+	==========
+	Sony_PLAYSTATION_R_3_Controller connected?
+	       Yes: at Joy10. Will be P1.
+	
+	==========
+	0079_USB_Gamepad connected?
+	       Yes: at Joy11. Will be P2.
 
 Notes
 =========================
