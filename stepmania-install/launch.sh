@@ -11,8 +11,6 @@ if [ -d ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps ]; then
 	STARTUP_MAX=30
 	KILL_MAX=30
 
-	# perl -e 'do { sleep(1); $_ = `/usr/local/stepmania-5.2/stepmania --debug --verbose`; print $_; } until (m/Display: /);' > ${STARTUP_LOGS}
-
 	/usr/local/stepmania-5.2/stepmania --verbose --debug > ${STARTUP_LOGS} 2>&1 &
 	SM_DUMMY_PID=$!
 
