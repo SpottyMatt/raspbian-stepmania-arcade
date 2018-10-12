@@ -188,7 +188,7 @@ If you have multiple controllers connected, you should see somethign like
 	usb-©Microsoft_Corporation_Controller_05B30D7-event-joystick -> ../event2
 	usb-Sony_PLAYSTATION_R_3_Controller-event-joystick -> ../event4
 
-Identify the controller you care about. For example, if the PS3 controlelr is the one, that's `event4`.
+Identify the controller you care about. For example, if the PS3 controller is the one, that's `event4`.
 
 Now run
 
@@ -254,7 +254,9 @@ StepMania's `Keymaps.ini` file might look like this:
 	2_UpLeft=
 	2_UpRight=
 
-Do the following:
+That isn't what needs to be in a single controller's keymap file.
+
+After copying the contents of a working `Keymap.ini` into a controller's keymap file, do the following:
 
 1. Remove the `[dance]` line
 2. Delete all lines that start with `2_`
