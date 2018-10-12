@@ -93,7 +93,7 @@ EOF
 				PLAYER_INDEX=$((PLAYER_INDEX + 1))
 			fi
 
-		JOY_INDEX=$((JOY_INDEX + 1))
+			JOY_INDEX=$((JOY_INDEX + 1))
 
 		done # with SM devices
 	done # with keymaps
