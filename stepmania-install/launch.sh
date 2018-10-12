@@ -43,8 +43,6 @@ if [ -d ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps ]; then
 | / __|                                         
 | \__ \                                         
 |_|___/                                         
-                                                
-                                                
  _____ _             _   _                      
 /  ___| |           | | (_)                     
 \ `--.| |_ __ _ _ __| |_ _ _ __   __ _          
