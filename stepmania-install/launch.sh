@@ -2,6 +2,11 @@
 
 STEPMANIA_SETTINGS_DIR=~/.stepmania-5.0
 
+####################
+# If there are named keymaps,
+# try to map controllers properly & predictably
+####################
+
 if [ -d ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps ]; then
 
 	STARTUP_LOGS="/tmp/sm-launch.log"
@@ -11,6 +16,7 @@ if [ -d ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps ]; then
 	STARTUP_MAX=30
 	KILL_MAX=30
 
+	# "fake" launch to read SM logs to find out the actual ordering of controllers
 	/usr/local/stepmania-5.2/stepmania --verbose --debug > ${STARTUP_LOGS} 2>&1 &
 	SM_DUMMY_PID=$!
 
@@ -49,7 +55,6 @@ if [ -d ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps ]; then
 \____/ \__\__,_|_|   \__|_|_| |_|\__, (_|_|_)   
                                   __/ |         
                                  |___/          
-
 EOF
 
 			while sleep 1; do
@@ -70,7 +75,6 @@ EOF
 
 	sleep 2
 
-
 	rm -f ${GENERATED_KEYMAP}
 	echo "[dance]" > ${GENERATED_KEYMAP}
 
@@ -88,9 +92,75 @@ EOF
 			DEVICE_SERIAL=$(udevadm info ${device} | awk -F'=' '/ID_SERIAL=(.*)/{print $2}')
 
 			if [ "${KEYMAP_NAME}" == "${DEVICE_SERIAL}" ]; then
-				echo "       Yes: at Joy${JOY_INDEX}. Will be P${PLAYER_INDEX}."
-				cat ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps/${keymap} | sed "s/1_/${PLAYER_INDEX}_/" | sed "s/Joy10/Joy${JOY_INDEX}/" >> ${GENERATED_KEYMAP}
+
+				printf "  Yes: at Joy${JOY_INDEX}. "
+
+				if [ $PLAYER_INDEX -le 2 ]; then
+					# It is one of the two primary controllers.
+
+					cat ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps/${keymap} | sed "s/1_/${PLAYER_INDEX}_/" | sed "s/Joy10/Joy${JOY_INDEX}/" >> ${GENERATED_KEYMAP}
+					echo "Will be P${PLAYER_INDEX}."
+				elif [ $PLAYER_INDEX -le 4 ]; then
+					# It's controller 3 or 4; will be a secondary controller.
+
+					SECONDARY_INDEX=$((PLAYER_INDEX - 2))
+
+					while read -r named_map_line; do
+
+						if [[ -z "${named_map_line// }" ]]; then
+							# skip blank lines
+							continue
+						fi
+
+						# do we need to add a line for the secondary mapping (e.g. if primary has no entry)
+						# or do we need to update a line for the secondary mapping (if primary DOES)?
+
+						# e.g. 1_Start=Joy10_B18 -> 2_Start=Joy10_B18
+						PLAYER_MAPPED_LINE=$(echo "${named_map_line}" | sed "s/1_/${SECONDARY_INDEX}_/")
+
+						# eg 2_Start
+						PLAYER_MAPPED_LINE_PATTERN=${PLAYER_MAPPED_LINE%=*}
+
+						EXISTING_MAPPING=$(grep "${PLAYER_MAPPED_LINE_PATTERN}" "${GENERATED_KEYMAP}")
+						MAPPING_EXISTS=$?
+						if [ $MAPPING_EXISTS == 0 ]; then
+							# there is a primary mapping for this controller.
+							# need to update the line, e.g.
+							# 2_Start=Joy11_B21 -> 2_Start=Joy11_B21:Joy14_B3
+
+							# drop existing secondary mapping, if exists
+
+							# from generated keymap:
+							# 2_Start=Joy10_B18:KeyA -> 2_Start=Joy10_B18
+							PRIMARY_MAPPING=${EXISTING_MAPPING%:*}
+
+							# from named keymap:
+							# 1_Start=Joy10_B3 -> Joy10_B3
+							SECONDARY_MAPPING=${named_map_line#*=}
+							# controller is already secondary; only take its primary mapping.
+							SECONDARY_MAPPING=${SECONDARY_MAPPING%:*}
+							# Joy10_B3 -> Joy14_B3
+							SECONDARY_MAPPING=$(echo "${SECONDARY_MAPPING}" | sed "s/Joy10/Joy${JOY_INDEX}/")
+
+							FULL_MAPPING=${PRIMARY_MAPPING}:${SECONDARY_MAPPING}
+							sed -i "s/${EXISTING_MAPPING}/${FULL_MAPPING}/" "${GENERATED_KEYMAP}"
+						else
+							# there is no primary mapping for this key.
+							# need to add a line.
+							# 2_Start=:Joy14_B3
+							echo "${PLAYER_MAPPED_LINE}" | sed "s/1_/${SECONDARY_INDEX}_/" | sed "s/=Joy10/=:Joy${JOY_INDEX}/" >> ${GENERATED_KEYMAP}
+						fi
+					done < "${STEPMANIA_SETTINGS_DIR}/Save/Keymaps/${keymap}"
+
+					echo "Will be P${SECONDARY_INDEX} secondary."
+				else
+					# It's controller 5 or more.
+					# Can't map that automatically.
+
+					echo "But 4 controllers were already mapped so it will be ignored."
+				fi
 				PLAYER_INDEX=$((PLAYER_INDEX + 1))
+				break
 			fi
 
 			JOY_INDEX=$((JOY_INDEX + 1))
@@ -108,6 +178,10 @@ fi
 
 sleep 1
 
+####################
+# Launch StepMania
+####################
+
 # hide the cursor
 unclutter -display :0 -noevents -grab &
 
@@ -116,4 +190,3 @@ unclutter -display :0 -noevents -grab &
 
 # kill the thing that's hiding the cursor
 pkill unclutter
-

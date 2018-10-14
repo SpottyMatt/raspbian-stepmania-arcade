@@ -160,21 +160,37 @@ You'd have to re-map the controllers through the "Options" menu every time StepM
 The included launch script offers a solution: You can put namned key mapping files in StepMania's `Save/Keymaps/` directory for each controller you have.
 The launch script will then figure out the order that StepMania sees your controllers and create a correct `Keymaps.ini` file for StepMania.
 
-Your controllers will always be mapped correctly.
+Your controllers will always be automatically mapped correctly.
 In addition, the controllers will be assigned to P1 and P2 in alphabetical order, so you'll always have the same controller being the first (or "left") player.
 
-Here's how:
-
-Map the Controller Normally
+Secondary Controllers
 -------------------------
+
+In the steps below, you'll create Keymap file for each of your controllers.
+You may include primary _and_ secondary key mappings.
+
+However, if you have more than 2 active controllers connected,
+the _primary_ mappings for controllers 3 and 4 will be used as
+the _secondary_ mappings of controllers 1 and 2, respectively.
+
+Instructions
+-------------------------
+
+Here's how to set up named controller mappings:
+
+1. [Map the Controller Normally](#map-the-controller-normally)
+2. [Get the Controller Name](#get-the-controller-name)
+3. [Create a Named Keymap File](#create-a-named-keymap-file)
+4. [Prepare the Named Keymap](#prepare-the-named-keymap)
+
+### Map the Controller Normally
 
 1. Connect only one controller/pad
 2. Reboot the machine
 3. Start StepMania
 4. Configure its key mappings through the "Options" menu, as the primary input for the primary controller
 
-Get the Controller Name
--------------------------
+### Get the Controller Name
 
 Run
 
@@ -192,12 +208,11 @@ Identify the controller you care about. For example, if the PS3 controller is th
 
 Now run
 
-	udevadm info /dev/input/event4 | awk -F'=' '/ID_SERIAL=(.*)/{print $2}
+	udevadm info /dev/input/event4 | awk -F'=' '/ID_SERIAL=(.*)/{print $2}'
 
 To print out the device's "serial ID." In this case it was `Sony_PLAYSTATION_R_3_Controller`.
 
-Create a Named Keymap
--------------------------
+### Create a Named Keymap File
 
 Create the directory `~/.stepmania-5.0/Save/Keymaps` if it doesn't already exist. You can do this by running
 
@@ -211,8 +226,7 @@ To make the PS3 controller always the main/left/P1 controller, create `0-Sony_PL
 
 Copy the contents of StepMania's `Keymaps.ini` into that file.
 
-Prepare the Named Keymap
--------------------------
+### Prepare the Named Keymap
 
 StepMania's `Keymaps.ini` file might look like this:
 
@@ -274,21 +288,28 @@ For the PS3 controller, it would look like this:
 	1_Start=Joy10_B18
 	1_Up=Joy10_B1
 
-Repeat
--------------------------
+### Repeat
 
 Do this again for each controller you want to use.
 Make sure no other controllers are connected while you're setting each one up.
 When you're done, you can test it by running `~/.stepmania-5.0/launch.sh`.
-You should see a printout like this:
+You should see a printout something like this:
 
 	==========
 	Sony_PLAYSTATION_R_3_Controller connected?
-	       Yes: at Joy10. Will be P1.
+	  Yes: at Joy10. Will be P1.
 	
 	==========
 	0079_USB_Gamepad connected?
-	       Yes: at Joy11. Will be P2.
+	  Yes: at Joy12. Will be P2.
+	
+	==========
+	©Microsoft_Corporation_Controller_05B30D7 connected?
+	  Yes: at Joy11. Will be P1 secondary.
+	
+	==========
+	Controller_Controller_Controller connected?
+	  Yes: at Joy13. Will be P2 secondary.
 
 Notes
 =========================
