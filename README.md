@@ -182,6 +182,7 @@ Here's how to set up named controller mappings:
 2. [Get the Controller Name](#get-the-controller-name)
 3. [Create a Named Keymap File](#create-a-named-keymap-file)
 4. [Prepare the Named Keymap](#prepare-the-named-keymap)
+5. [Repeat}(#repeat)
 
 ### Map the Controller Normally
 
