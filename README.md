@@ -159,7 +159,7 @@ If you have more than one dance pad or controller, sometimes StepMania will swap
 If these controllers are actually different devices and require different key mappings, this makes them not work.
 You'd have to re-map the controllers through the "Options" menu every time StepMania started.
 
-The included launch script offers a solution: You can put namned key mapping files in StepMania's `Save/Keymaps/` directory for each controller you have.
+The included launch script offers a solution: You can put named key mapping files in StepMania's `Save/Keymaps/` directory for each controller you have.
 The launch script will then figure out the order that StepMania sees your controllers and create a correct `Keymaps.ini` file for StepMania.
 
 Your controllers will always be automatically mapped correctly.
@@ -184,7 +184,7 @@ Here's how to set up named controller mappings:
 2. [Get the Controller Name](#get-the-controller-name)
 3. [Create a Named Keymap File](#create-a-named-keymap-file)
 4. [Prepare the Named Keymap](#prepare-the-named-keymap)
-5. [Repeat}(#repeat)
+5. [Repeat](#repeat)
 
 ### Map the Controller Normally
 
