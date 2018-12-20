@@ -88,7 +88,7 @@ stepmania-build:
 .PHONY: stepmania-install
 stepmania-install:
 	$(MAKE) --dir stepmania install
-	mkdir -p "$(HOME)/stepmania-5.0/Save"
+	mkdir -p "$(HOME)/.stepmania-5.0/Save"
 	touch "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
 	./merge-config.sh ./stepmania-install/Preferences.ini "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
 	cp -fv ./stepmania-install/launch.sh "$(HOME)/.stepmania-5.0/"
