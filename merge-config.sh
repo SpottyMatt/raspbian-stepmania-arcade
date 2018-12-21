@@ -25,8 +25,9 @@ if ! [ -e "${SOURCE_CONFIG}" ]; then
 fi
 
 if ! [ -e "${TARGET_CONFIG}" ]; then
-	echo "ERROR: [${TARGET_CONFIG}] does not exist."
-	exit 1
+	echo "WARNING: [${TARGET_CONFIG}] does not exist."
+	mkdir -p $(dirname "${TARGET_CONFIG}")
+	touch "${TARGET_CONFIG}"
 fi
 
 echo -e "Merging configuration:\n\tSource : ${SOURCE_CONFIG}\n\tTarget : ${TARGET_CONFIG}"
