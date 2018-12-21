@@ -95,8 +95,8 @@ stepmania-install:
 	mkdir -p "$(HOME)/.config/autostart"
 	cat stepmania-install/stepmania.desktop | RUNUSER=$(shell whoami) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
 	mkdir -p "$(HOME)/Pictures/"
-	cp -rfv ./stepmania-install/stepmania_wallpaper/ "$(HOME)"/Pictures/.
-	DISPLAY=:0 pcmanfm --set-wallpaper="$(HOME)/Pictures/stepmania_wallpaper/stepmania_yellow.png"
+	cp -rfv ./stepmania-install/stepmania-wallpaper/ "$(HOME)"/Pictures/.
+	DISPLAY=:0 pcmanfm --set-wallpaper="$(HOME)/Pictures/stepmania-wallpaper/yellow_5.1_16:9.png"
 
 .PHONY: overclock-apply
 overclock-apply:

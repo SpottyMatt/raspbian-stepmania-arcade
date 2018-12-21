@@ -3,7 +3,7 @@ StepMania on Raspberry Pi
 
 Scripts & instructions to turn a Raspberry Pi 3B or 3B+ running Raspian into a [StepMania](https://github.com/stepmania/stepmania) arcade console.
 
-![StepMania on Raspbery Pi Title Card](stepmania-install/stepmania_wallpaper/stepmania_yellow.png)
+![StepMania on Raspbery Pi Title Card](stepmania-install/stepmania-wallpaper/yellow_5.1_16:9.png)
 
 1. [Prerequisites](#prerequisites)
 2. [Quick Start](#quick-start)
