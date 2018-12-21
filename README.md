@@ -1,7 +1,7 @@
 StepMania on Raspberry Pi
 =========================
 
-Scripts & instructions to turn a Raspberry Pi 3B or 3B+ running Raspian into a [StepMania](https://github.com/stepmania/stepmania) arcade console.
+Scripts & instructions to turn a Raspberry Pi 3B or 3B+ running Raspbian into a [StepMania](https://github.com/stepmania/stepmania) arcade console.
 
 ![StepMania on Raspbery Pi Title Card](stepmania-install/stepmania-wallpaper/yellow_5.1_16:9.png)
 
@@ -20,7 +20,7 @@ Prerequisites
 1. A supported [Raspberry Pi model](https://www.raspberrypi.org/products/)
 	1. 3B
 	2. 3B+
-2. An installed & working [Raspian](https://www.raspberrypi.org/downloads/raspbian/) operating system, Stretch (v9) or later.
+2. An installed & working [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) operating system, Stretch (v9) or later.
 3. A [USB sound card that works out-of-the-box with the Raspberry Pi](https://learn.adafruit.com/usb-audio-cards-with-a-raspberry-pi?view=all)
 
 Quick Start
@@ -128,7 +128,7 @@ Get USB Sound Working
 
 Plug in your sound card. Use one or some combination of the following to try to activate it:
 
-1. Raspian GUI
+1. Raspbian GUI
 2. `raspi-config`
 3. `alsamixer`
 
@@ -403,4 +403,4 @@ This uses a working commit from the [`5_1-new`](https://github.com/stepmania/ste
 If you want to try building from a more recent commit, [update the `stepmania` submodule](https://stackoverflow.com/questions/5828324/update-git-submodule-to-latest-commit-on-origin/5828396#5828396) before building and installing.
 
 Previously, this repository used the (unmaintained) StepMania 5.2 code from the tip of the `master` branch.
-If for some reason you want to set up _that_ StepMania, the old code has been preserved in the [`StepMania-5.2` branch](https://github.com/SpottyMatt/raspian-3b-stepmania-arcade/tree/StepMania-5.2) of this repository.
+If for some reason you want to set up _that_ StepMania, the old code has been preserved in the [`StepMania-5.2` branch](https://github.com/SpottyMatt/raspbian-3b-stepmania-arcade/tree/StepMania-5.2) of this repository.
