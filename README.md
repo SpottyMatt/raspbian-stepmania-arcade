@@ -394,3 +394,11 @@ In particular, it's got tables of the `ARM_CPU` and `ARM_FPU` values for other R
 Who knows, they might work! The regular 3B was just powerful enough to run StepMania acceptably; older models may struggle to perform.
 
 Edit your `Makefile` and give it a try!
+
+StepMania Source
+-------------------------
+
+This uses a working commit from the [`5_1-new`](https://github.com/stepmania/stepmania/tree/5_1-new) branch of StepMania as the source code.
+
+If you want to try building from a more recent commit, [update the `stepmania` submodule](https://stackoverflow.com/questions/5828324/update-git-submodule-to-latest-commit-on-origin/5828396#5828396) before building and installing.
+
