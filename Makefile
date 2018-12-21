@@ -17,6 +17,7 @@ system-prep:
 	chmod a+x ./merge-config.sh
 	sudo ./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
 	sudo cp -fv ./system-prep/usb-audio-by-default.conf /etc/modprobe.d/.
+	[ -e "$(HOME)/.asoundrc" ] && rm "$(HOME)/.asoundrc"
 
 .PHONY: build-prep
 build-prep:
