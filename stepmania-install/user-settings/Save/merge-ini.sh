@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
 # Usage:
-#	merge-config.sh <source> <target>
+#	merge-ini.sh <source> <target> [<add_section>]
 #
-# Given a config file full of key=value lines,
+# Given an ini file full of key=value lines, in [sections]
 # read a source file and add or update lines in a
 # target file so that the target file contains the source settings.
+# If adding a key=value pairing is necessary, it will be added right after the first [section] heading.
+# The heading will be created at the end of the file if it doesn't exist.
 #
 # This doesn't work for keys that are allowed to be duplicated, e.g. if the following is valid:
 #
@@ -18,6 +20,7 @@
 
 SOURCE_CONFIG=$1
 TARGET_CONFIG=$2
+ADD_SECTION=$3
 
 if ! [ -e "${SOURCE_CONFIG}" ]; then
 	echo "ERROR: [${SOURCE_CONFIG}] does not exist."
@@ -57,8 +60,21 @@ while read line; do
 		fi
 
 	else
-		echo -e "\t+ Added line to ${TARGET_CONFIG}:\n\t\t${KEY}=${VALUE}"
-		echo "${line}" | tee -a "${TARGET_CONFIG}" > /dev/null
+		if [ "x" == "x${ADD_SECTION}" ]; then
+			echo -e "\t+ Added line to ${TARGET_CONFIG}:\n\t\t${KEY}=${VALUE}"
+			echo "${line}" | tee -a "${TARGET_CONFIG}" > /dev/null
+		else
+			echo -e "\t+ Added line to ${TARGET_CONFIG}'s [${ADD_SECTION}] section:\n\t\t${KEY}=${VALUE}"
+
+			if ! grep -q "[${ADD_SECTION}]" "${TARGET_CONFIG}" ]; then
+				# section doesn't exist; create it.
+				echo "[${ADD_SECTION}]" | tee -a "${TARGET_CONFIG}" > /dev/null
+				echo "${line}" | tee -a "${TARGET_CONFIG}" > /dev/null
+			else
+				# section exists; append line right after it.
+				sed -i "s/\[${ADD_SECTION}\]/\[${ADD_SECTION}\]\n${KEY}=${VALUE}/" "${TARGET_CONFIG}"
+			fi
+		fi
 	fi
 done < "${SOURCE_CONFIG}"
 

@@ -17,6 +17,7 @@ system-prep:
 	chmod a+x ./merge-config.sh
 	sudo ./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
 	sudo cp -fv ./system-prep/usb-audio-by-default.conf /etc/modprobe.d/.
+	[ -e "$(HOME)/.asoundrc" ] && rm "$(HOME)/.asoundrc"
 
 .PHONY: build-prep
 build-prep:
@@ -55,8 +56,8 @@ build-prep:
 		yasm \
 		zlib1g-dev
 	sudo apt-get autoremove -y
-	sudo mkdir -p /usr/local/stepmania-5.2
-	sudo chmod a+rw /usr/local/stepmania-5.2
+	sudo mkdir -p /usr/local/stepmania-5.1
+	sudo chmod a+rw /usr/local/stepmania-5.1
 
 
 .PHONY: stepmania-prep
@@ -67,8 +68,6 @@ stepmania-prep:
 	cd stepmania
 	git submodule init
 	git submodule update
-	git fetch
-	git merge origin/master
 	git apply ../stepmania-build/raspi-3b-arm.patch && git commit --author="raspian-3b-stepmania-arcade <SpottyMatt@gmail.com>" -a -m "Patched to enable building on ARM processors with -DARM_CPU=XXX -DARM_FPU=XXX"
 	cmake -G "Unix Makefiles" \
 	        -DWITH_CRASH_HANDLER=0 \
@@ -79,7 +78,7 @@ stepmania-prep:
 	        -DARM_CPU=cortex-a53 \
 		-DARM_FPU=neon-fp-armv8
 	cmake .
-	git reset --hard origin/master
+	git reset --hard HEAD^
 
 .PHONY: stepmania-build
 stepmania-build:
@@ -88,16 +87,16 @@ stepmania-build:
 .PHONY: stepmania-install
 stepmania-install:
 	$(MAKE) --dir stepmania install
-	mkdir -p "$(HOME)/.stepmania-5.0/Save"
-	touch "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
-	./merge-config.sh ./stepmania-install/Preferences.ini "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
-	cp -fv ./stepmania-install/launch.sh "$(HOME)/.stepmania-5.0/"
-	chmod a+x "$(HOME)/.stepmania-5.0/launch.sh"
+	mkdir -p "$(HOME)/.stepmania-5.1"
+	cp -rfv ./stepmania-install/user-settings/. "$(HOME)/.stepmania-5.1/"
+	chmod a+x "$(HOME)/.stepmania-5.1/Save/merge-ini.sh"
+	chmod a+x "$(HOME)/.stepmania-5.1/launch.sh"
+	cp -rfv ./stepmania-install/global-settings/. "/usr/local/stepmania-5.1/"
 	mkdir -p "$(HOME)/.config/autostart"
 	cat stepmania-install/stepmania.desktop | RUNUSER=$(shell whoami) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
 	mkdir -p "$(HOME)/Pictures/"
-	cp -rfv ./stepmania-install/stepmania_wallpaper/ "$(HOME)"/Pictures/.
-	DISPLAY=:0 pcmanfm --set-wallpaper="$(HOME)/Pictures/stepmania_wallpaper/stepmania_yellow.png"
+	cp -rfv ./stepmania-install/stepmania-wallpaper/ "$(HOME)"/Pictures/.
+	DISPLAY=:0 pcmanfm --set-wallpaper="$(HOME)/Pictures/stepmania-wallpaper/yellow_5.1_16:9.png"
 
 .PHONY: overclock-apply
 overclock-apply:
