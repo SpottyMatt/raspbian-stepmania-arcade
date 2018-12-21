@@ -211,7 +211,6 @@ sleep 1
 if [ "${SHOULD_APPLY_DEFAULTS}" == "true" ]; then
 	cp ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini.orig
 	${STEPMANIA_SETTINGS_DIR}/Save/merge-ini.sh ${STEPMANIA_SETTINGS_DIR}/Save/Default-Preferences.ini ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini Options
-	cp ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini.defaulted
 fi
 
 ####################
