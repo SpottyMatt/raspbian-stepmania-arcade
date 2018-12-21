@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-STEPMANIA_SETTINGS_DIR=~/.stepmania-5.0
+STEPMANIA_SETTINGS_DIR=~/.stepmania-5.1
 
 ####################
 # If there are named keymaps,

@@ -88,11 +88,11 @@ stepmania-build:
 .PHONY: stepmania-install
 stepmania-install:
 	$(MAKE) --dir stepmania install
-	mkdir -p "$(HOME)/.stepmania-5.0/Save"
-	touch "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
-	./merge-config.sh ./stepmania-install/Preferences.ini "$(HOME)/.stepmania-5.0/Save/Preferences.ini"
-	cp -fv ./stepmania-install/launch.sh "$(HOME)/.stepmania-5.0/"
-	chmod a+x "$(HOME)/.stepmania-5.0/launch.sh"
+	mkdir -p "$(HOME)/.stepmania-5.1/Save"
+	touch "$(HOME)/.stepmania-5.1/Save/Preferences.ini"
+	./merge-config.sh ./stepmania-install/Preferences.ini "$(HOME)/.stepmania-5.1/Save/Preferences.ini"
+	cp -fv ./stepmania-install/launch.sh "$(HOME)/.stepmania-5.1/"
+	chmod a+x "$(HOME)/.stepmania-5.1/launch.sh"
 	mkdir -p "$(HOME)/.config/autostart"
 	cat stepmania-install/stepmania.desktop | RUNUSER=$(shell whoami) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
 	mkdir -p "$(HOME)/Pictures/"
