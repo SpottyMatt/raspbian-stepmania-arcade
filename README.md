@@ -402,3 +402,5 @@ This uses a working commit from the [`5_1-new`](https://github.com/stepmania/ste
 
 If you want to try building from a more recent commit, [update the `stepmania` submodule](https://stackoverflow.com/questions/5828324/update-git-submodule-to-latest-commit-on-origin/5828396#5828396) before building and installing.
 
+Previously, this repository used the (unmaintained) StepMania 5.2 code from the tip of the `master` branch.
+If for some reason you want to set up _that_ StepMania, the old code has been preserved in the [`StepMania-5.2` branch](https://github.com/SpottyMatt/raspian-3b-stepmania-arcade/tree/StepMania-5.2) of this repository.
