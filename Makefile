@@ -68,7 +68,7 @@ stepmania-prep:
 	git submodule init
 	git submodule update
 	git fetch
-	git merge origin/master
+	git merge origin/5_1-new
 	git apply ../stepmania-build/raspi-3b-arm.patch && git commit --author="raspian-3b-stepmania-arcade <SpottyMatt@gmail.com>" -a -m "Patched to enable building on ARM processors with -DARM_CPU=XXX -DARM_FPU=XXX"
 	cmake -G "Unix Makefiles" \
 	        -DWITH_CRASH_HANDLER=0 \
@@ -79,7 +79,7 @@ stepmania-prep:
 	        -DARM_CPU=cortex-a53 \
 		-DARM_FPU=neon-fp-armv8
 	cmake .
-	git reset --hard origin/master
+	git reset --hard origin/5_1-new
 
 .PHONY: stepmania-build
 stepmania-build:
