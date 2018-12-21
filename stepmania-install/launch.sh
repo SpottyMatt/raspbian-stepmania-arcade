@@ -3,11 +3,33 @@
 STEPMANIA_SETTINGS_DIR=~/.stepmania-5.1
 
 ####################
+# Default Preferences:
+# If there aren't user prefs (first-time startup),
+# do a fake startup & then overwrite generated preferences
+####################
+
+SHOULD_APPLY_DEFAULTS="false"
+
+if ! [ -e "${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini" ]; then
+	SHOULD_APPLY_DEFAULTS="true"
+	echo "First-ever launch; should apply defaults if present."
+fi
+
+####################
 # If there are named keymaps,
 # try to map controllers properly & predictably
 ####################
 
-if [ -d ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps ]; then
+SHOULD_LOAD_KEYMAPS="false"
+
+if [ -d "${STEPMANIA_SETTINGS_DIR}/Save/Keymaps" ]; then
+	SHOULD_LOAD_KEYMAPS="true"
+else
+	echo "No named key mappings found in [${STEPMANIA_SETTINGS_DIR}/Save/Keymaps/]."
+fi
+
+
+if [ "${SHOULD_LOAD_KEYMAPS}" == "true" ] || [ "${SHOULD_APPLY_DEFAULTS}" == "true" ]; then
 
 	STARTUP_LOGS="/tmp/sm-launch.log"
 	STARTED_UP_PATTERN="Display: "
@@ -25,7 +47,7 @@ if [ -d ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps ]; then
 	while sleep 1; do
 		STARTUP_WAIT=$((STARTUP_WAIT + 1))
 		if [ $STARTUP_WAIT -gt $STARTUP_MAX ]; then
-			echo "WARNING: StepMania took too long starting up. Will not be able to map controller input."
+			echo "WARNING: StepMania took too long starting up."
 			kill -9 ${SM_DUMMY_PID}
 			sleep 5
 			break
@@ -60,7 +82,7 @@ EOF
 			while sleep 1; do
 				KILL_WAIT=$((KILL_WAIT + 1))
 				if [ $KILL_WAIT -gt $KILL_MAX ]; then
-					echo "WARNING: StepMania took too long shutting down. Will not be able to map controller input."
+					echo "WARNING: StepMania took too long shutting down."
 					kill -9 ${SM_DUMMY_PID}
 					sleep 5
 					break 2
@@ -73,7 +95,13 @@ EOF
 		fi
 	done # with fake startup to get input device order
 
-	sleep 2
+fi
+
+sleep 2
+
+# Load Keymaps if necessary
+
+if [ "${SHOULD_LOAD_KEYMAPS}" == "true" ]; then
 
 	rm -f ${GENERATED_KEYMAP}
 	echo "[dance]" > ${GENERATED_KEYMAP}
@@ -172,11 +200,19 @@ EOF
 		# at least one mapping was added
 		cp -f ${GENERATED_KEYMAP} ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps.ini
 	fi
-else
-	echo "No named key mappings found in [${STEPMANIA_SETTINGS_DIR}/Save/Keymaps/]."
 fi
 
 sleep 1
+
+####################
+# Apply Defaults
+####################
+
+if [ "${SHOULD_APPLY_DEFAULTS}" == "true" ]; then
+	cp ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini.orig
+	${STEPMANIA_SETTINGS_DIR}/Save/merge-ini.sh ${STEPMANIA_SETTINGS_DIR}/Save/Default-Preferences.ini ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini Options
+	cp ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini.defaulted
+fi
 
 ####################
 # Launch StepMania
