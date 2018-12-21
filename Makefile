@@ -55,8 +55,8 @@ build-prep:
 		yasm \
 		zlib1g-dev
 	sudo apt-get autoremove -y
-	sudo mkdir -p /usr/local/stepmania-5.2
-	sudo chmod a+rw /usr/local/stepmania-5.2
+	sudo mkdir -p /usr/local/stepmania-5.1
+	sudo chmod a+rw /usr/local/stepmania-5.1
 
 
 .PHONY: stepmania-prep
