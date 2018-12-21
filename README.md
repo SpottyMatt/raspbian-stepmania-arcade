@@ -217,9 +217,9 @@ To print out the device's "serial ID." In this case it was `Sony_PLAYSTATION_R_3
 
 ### Create a Named Keymap File
 
-Create the directory `~/.stepmania-5.0/Save/Keymaps` if it doesn't already exist. You can do this by running
+Create the directory `~/.stepmania-5.1/Save/Keymaps` if it doesn't already exist. You can do this by running
 
-	mkdir -p ~/.stepmania-5.0/Save/Keymaps
+	mkdir -p ~/.stepmania-5.1/Save/Keymaps
 
 In that directory, create a file for the controller, named `<PRIORITY>-<CONTROLLER_NAME>.ini`.
 
@@ -282,7 +282,7 @@ After copying the contents of a working `Keymap.ini` into a controller's keymap 
 
 For the PS3 controller, it would look like this:
 
-`~/.stepmania-5.0/Save/Keymaps/0-Sony_PLAYSTATION_R_3_Controller.ini`:
+`~/.stepmania-5.1/Save/Keymaps/0-Sony_PLAYSTATION_R_3_Controller.ini`:
 
 	1_Back=Joy10_B17
 	1_Down=Joy10_B2
@@ -295,7 +295,7 @@ For the PS3 controller, it would look like this:
 
 Do this again for each controller you want to use.
 Make sure no other controllers are connected while you're setting each one up.
-When you're done, you can test it by running `~/.stepmania-5.0/launch.sh`.
+When you're done, you can test it by running `~/.stepmania-5.1/launch.sh`.
 You should see a printout something like this:
 
 	==========
