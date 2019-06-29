@@ -39,7 +39,7 @@ if [ "${SHOULD_LOAD_KEYMAPS}" == "true" ] || [ "${SHOULD_APPLY_DEFAULTS}" == "tr
 	KILL_MAX=30
 
 	# "fake" launch to read SM logs to find out the actual ordering of controllers
-	/usr/local/stepmania-5.1/stepmania --verbose --debug > ${STARTUP_LOGS} 2>&1 &
+	stepmania --verbose --debug > ${STARTUP_LOGS} 2>&1 &
 	SM_DUMMY_PID=$!
 
 	STARTUP_WAIT=0
@@ -221,7 +221,7 @@ fi
 unclutter -display :0 -noevents -grab &
 
 # start StepMania
-/usr/local/stepmania-5.1/stepmania
+stepmania
 
 # kill the thing that's hiding the cursor
 pkill unclutter
