@@ -1,101 +1,35 @@
+SM_CONFIG_DIR=$(HOME)/.stepmania-5.1
+SM_INSTALL_DIR=/usr/games/stepmania
+
 .PHONY: all
 all:
 	$(MAKE) system-prep
-	$(MAKE) stepmania-prep
-	$(MAKE) stepmania-build
 	$(MAKE) stepmania-install
-
-.PHONY: build-only
-build-only:
-	$(MAKE) build-prep
-	$(MAKE) stepmania-prep
-	$(MAKE) stepmania-build
+	$(MAKE) arcade-setup
 
 .PHONY: system-prep
 system-prep:
-	$(MAKE) build-prep
 	chmod a+x ./merge-config.sh
 	sudo ./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
 	sudo cp -fv ./system-prep/usb-audio-by-default.conf /etc/modprobe.d/.
 	[ -e "$(HOME)/.asoundrc" ] && rm "$(HOME)/.asoundrc"
 
-.PHONY: build-prep
-build-prep:
-	sudo sed -i 's/#deb-src/deb-src/g' /etc/apt/sources.list
-	sudo apt-get update
-	sudo apt-get install -y \
-		binutils-dev \
-		build-essential \
-		cmake \
-		ffmpeg \
-		libasound-dev \
-		libbz2-dev \
-		libc6-dev \
-		libcairo2-dev \
-		libgdk-pixbuf2.0-dev \
-		libglew1.5-dev \
-		libglib2.0-dev \
-		libglu1-mesa-dev \
-		libgtk2.0-dev \
-		libjack0 \
-		libjack-dev \
-		libjpeg-dev \
-		libmad0-dev \
-		libogg-dev \
-		libpango1.0-dev \
-		libpng-dev \
-		libpulse-dev \
-		libudev-dev \
-		libva-dev \
-		libvorbis-dev \
-		libxrandr-dev \
-		libxtst-dev \
-		mesa-common-dev \
-		mesa-utils \
-		unclutter \
-		yasm \
-		zlib1g-dev
-	sudo apt-get autoremove -y
-	sudo mkdir -p /usr/local/stepmania-5.1
-	sudo chmod a+rw /usr/local/stepmania-5.1
-
-
-.PHONY: stepmania-prep
-.ONESHELL:
-stepmania-prep:
-	git submodule init
-	git submodule update
-	cd stepmania
-	git submodule init
-	git submodule update
-	git apply ../stepmania-build/raspi-3b-arm.patch && git commit --author="raspian-3b-stepmania-arcade <SpottyMatt@gmail.com>" -a -m "Patched to enable building on ARM processors with -DARM_CPU=XXX -DARM_FPU=XXX"
-	cmake -G "Unix Makefiles" \
-	        -DWITH_CRASH_HANDLER=0 \
-	        -DWITH_SSE2=0 \
-	        -DWITH_MINIMAID=0 \
-	        -DWITH_FULL_RELEASE=1 \
-		-DCMAKE_BUILD_TYPE=Release \
-	        -DARM_CPU=cortex-a53 \
-		-DARM_FPU=neon-fp-armv8
-	cmake .
-	git reset --hard HEAD^
-
-.PHONY: stepmania-build
-stepmania-build:
-	$(MAKE) --dir stepmania
-
 .PHONY: stepmania-install
 stepmania-install:
-	$(MAKE) --dir stepmania install
-	mkdir -p "$(HOME)/.stepmania-5.1"
-	cp -rfv ./stepmania-install/user-settings/. "$(HOME)/.stepmania-5.1/"
-	chmod a+x "$(HOME)/.stepmania-5.1/Save/merge-ini.sh"
-	chmod a+x "$(HOME)/.stepmania-5.1/launch.sh"
-	cp -rfv ./stepmania-install/global-settings/. "/usr/local/stepmania-5.1/"
+	curl https://github.com/SpottyMatt/stepmania-raspi-deb/releases/download/v5.1.0-b2/stepmania-5.1.0-b2-20180723-armhf.deb > /tmp/stepmania-5.1.0-b2-20180723-armhf.deb
+	sudo apt-get install -f /tmp/stepmania-5.1.0-b2-20180723-armhf.deb
+
+.PHONY: arcade-setup
+arcade-setup:
+	mkdir -p "$(SM_CONFIG_DIR)"
+	cp -rfv ./arcade-setup/user-settings/. "$(SM_CONFIG_DIR)/"
+	chmod a+x "$(SM_CONFIG_DIR)/Save/merge-ini.sh"
+	chmod a+x "$(SM_CONFIG_DIR)/launch.sh"
+	cp -rfv ./arcade-setup/global-settings/. "$(SM_INSTALL_DIR)/"
 	mkdir -p "$(HOME)/.config/autostart"
-	cat stepmania-install/stepmania.desktop | RUNUSER=$(shell whoami) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
+	cat arcade-setup/stepmania.desktop | RUNUSER=$(shell whoami) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
 	mkdir -p "$(HOME)/Pictures/"
-	cp -rfv ./stepmania-install/stepmania-wallpaper/ "$(HOME)"/Pictures/.
+	cp -rfv ./arcade-setup/stepmania-wallpaper/ "$(HOME)"/Pictures/.
 	DISPLAY=:0 pcmanfm --set-wallpaper="$(HOME)/Pictures/stepmania-wallpaper/yellow_5.1_16:9.png"
 
 .PHONY: overclock-apply
