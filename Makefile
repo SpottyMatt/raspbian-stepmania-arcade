@@ -1,15 +1,11 @@
 SM_CONFIG_DIR=$(HOME)/.stepmania-5.1
-SM_INSTALL_DIR=$(shell dirname $$(which stepmania) 2>/dev/null )
+SM_INSTALL_DIR=$(shell dirname $$(which stepmania) 2>/dev/null)
 
 .PHONY: all
-all: preflight-checks
+all:
 	$(MAKE) system-prep
 	$(MAKE) stepmania-install
 	$(MAKE) arcade-setup
-
-.PHONY: preflight-checks
-preflight-checks:
-	@if [ -z $(SM_INSTALL_DIR) ]; then echo "ERROR: stepmania is not on the PATH"; exit 1; fi
 
 .PHONY: system-prep
 system-prep:
@@ -20,13 +16,18 @@ system-prep:
 
 .PHONY: stepmania-install
 stepmania-install:
+ifeq($(SM_INSTALL_DIR),)
 	curl https://github.com/SpottyMatt/stepmania-raspi-deb/releases/download/v5.1.0-b2/stepmania-5.1.0-b2-20180723-armhf.deb > /tmp/stepmania-5.1.0-b2-20180723-armhf.deb
 	sudo apt-get install -f /tmp/stepmania-5.1.0-b2-20180723-armhf.deb
+else
+	echo "stepmania is already on the PATH at $(SM_INSTALL_DIR)
+endif
 
 .PHONY: arcade-setup
 arcade-setup:
 	mkdir -p "$(SM_CONFIG_DIR)"
 	cp -rfv ./arcade-setup/user-settings/. "$(SM_CONFIG_DIR)/"
+	sed -i 's/SM_CONFIG_DIR=.*/SM_CONFIG_DIR=$(SM_CONFIG_DIR)/g' "$(SM_CONFIG_DIR)/launch.sh"
 	chmod a+x "$(SM_CONFIG_DIR)/Save/merge-ini.sh"
 	chmod a+x "$(SM_CONFIG_DIR)/launch.sh"
 	cp -rfv ./arcade-setup/global-settings/. "$(SM_INSTALL_DIR)/"

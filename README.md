@@ -1,7 +1,7 @@
-StepMania on Raspberry Pi
+StepMania Arcade on Raspberry Pi
 =========================
 
-Scripts & instructions to turn a Raspberry Pi 3B or 3B+ running Raspbian into a [StepMania](https://github.com/stepmania/stepmania) arcade console.
+Scripts & instructions to turn a Raspberry Pi running Raspbian into a [StepMania](https://github.com/stepmania/stepmania) arcade console.
 
 ![StepMania on Raspbery Pi Title Card](stepmania-install/stepmania-wallpaper/yellow_5.1_16:9.png)
 
@@ -22,13 +22,14 @@ Prerequisites
 	2. 3B+
 2. An installed & working [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) operating system, Stretch (v9) or later.
 3. A [USB sound card that works out-of-the-box with the Raspberry Pi](https://learn.adafruit.com/usb-audio-cards-with-a-raspberry-pi?view=all)
+4. (Optional) A working StepMania binary for Raspberry Pi, on the `$PATH`
 
 Quick Start
 =========================
 
 1. Clone this repository
 2. Run `make`
-3. Wait ~2 hours
+3. Wait a bit
 4. Reboot
 5. Yay, StepMania automatically starts
 6. (Optional) Run `make overclock-apply` for better performance
@@ -333,24 +334,17 @@ If you _want_ to do some of the tasks individually, they are:
 
 ### `make system-prep`
 
-1. Install build dependencies for StepMania
-2. Prepare StepMania installation directory
-3. Configure `/boot/config.txt` with non-overclock settings (including enabling OpenGL)
-
-### `make stepmania-prep`
-
-1. Patch StepMania to support building on ARM
-2. Run `cmake` to prepare StepMania to build
-
-### `make stepmania-build`
-
-Build StepMania
+1. Configure `/boot/config.txt` with non-overclock settings (including enabling OpenGL)
+2. Prepare to use USB audio
 
 ### `make stepmania-install`
 
-1. `make install` StepMania to `/usr/local`
-2. Set up StepMania to start automatically on login.
-3. Set some StepMania `Preferences.ini` settings.
+1. Install StepMania for Raspberry Pi
+
+### `make arcade-setup`
+
+1. Set up StepMania to start automatically on login.
+2. Set some StepMania `Preferences.ini` settings.
 
 ### `make overclock-apply`
 
@@ -379,29 +373,11 @@ Performance Benchmarks
 | 1680 x 1050       | 512          | Yes          | 37        |
 | 1680 x 1050       | 1024         | Yes          | 33        |
 
-Building for Other Raspberry Pi Models
--------------------------
-
-If you look at [`raspi-3b-arm.patch`](stepmania-build/raspi-3b-arm.patch), you'll see there are two variables that really matter for building StepMania:
-
-1. `ARM_CPU`
-2. `ARM_FPU`
-
-Those are set in the `Makefile` to the correct values for the Raspberry Pi 3B/3B+.
-
-See this excellent gist: [GCC compiler optimization for ARM-based systems](https://gist.github.com/fm4dd/c663217935dc17f0fc73c9c81b0aa845) for more information on compiling with GCC on Raspberry Pi.
-
-In particular, it's got tables of the `ARM_CPU` and `ARM_FPU` values for other Raspberry Pi models.
-Who knows, they might work! The regular 3B was just powerful enough to run StepMania acceptably; older models may struggle to perform.
-
-Edit your `Makefile` and give it a try!
-
 StepMania Source
 -------------------------
 
-This uses a working commit from the [`5_1-new`](https://github.com/stepmania/stepmania/tree/5_1-new) branch of StepMania as the source code.
+By default, if `stepmania` is not present on your Pi's `$PATH`,
+this will install a pre-compiled StepMania binary from [`SpottyMatt/stepmania-raspi-deb`](https://github.com/SpottyMatt/stepmania-raspi-deb/releases).
 
-If you want to try building from a more recent commit, [update the `stepmania` submodule](https://stackoverflow.com/questions/5828324/update-git-submodule-to-latest-commit-on-origin/5828396#5828396) before building and installing.
-
-Previously, this repository used the (unmaintained) StepMania 5.2 code from the tip of the `master` branch.
-If for some reason you want to set up _that_ StepMania, the old code has been preserved in the [`StepMania-5.2` branch](https://github.com/SpottyMatt/raspbian-3b-stepmania-arcade/tree/StepMania-5.2) of this repository.
+If you want to set up a different version of StepMania as an arcade console (with no guarantees that these scripts will work with your chosen version),
+just make sure that version is installed and on your `$PATH` before running `make`.
