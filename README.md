@@ -373,10 +373,10 @@ Performance Benchmarks
 | 1680 x 1050       | 512          | Yes          | 37        |
 | 1680 x 1050       | 1024         | Yes          | 33        |
 
-StepMania Source
+StepMania Version
 -------------------------
 
-By default, if `stepmania` is not present on your Pi's `$PATH`,
+By default, if `stepmania` is not present on your Pi's `$PATH`
 this will install a pre-compiled StepMania binary from [`SpottyMatt/stepmania-raspi-deb`](https://github.com/SpottyMatt/stepmania-raspi-deb/releases).
 
 If you want to set up a different version of StepMania as an arcade console (with no guarantees that these scripts will work with your chosen version),

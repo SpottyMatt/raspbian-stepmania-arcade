@@ -1,5 +1,6 @@
 SM_CONFIG_DIR=$(HOME)/.stepmania-5.1
 SM_INSTALL_DIR=$(shell dirname $$(which stepmania) 2>/dev/null)
+SM_BINARY_URL=https://github.com/SpottyMatt/stepmania-raspi-deb/releases/download/v5.1.0-b2/stepmania-5.1.0-b2-20180723-armhf.deb
 
 .PHONY: all
 all:
@@ -17,10 +18,10 @@ system-prep:
 .PHONY: stepmania-install
 stepmania-install:
 ifeq($(SM_INSTALL_DIR),)
-	curl https://github.com/SpottyMatt/stepmania-raspi-deb/releases/download/v5.1.0-b2/stepmania-5.1.0-b2-20180723-armhf.deb > /tmp/stepmania-5.1.0-b2-20180723-armhf.deb
-	sudo apt-get install -f /tmp/stepmania-5.1.0-b2-20180723-armhf.deb
+	curl "$(SM_BINARY_URL)" > /tmp/stepmania.deb
+	sudo apt-get install -f /tmp/stepmania.deb
 else
-	echo "stepmania is already on the PATH at $(SM_INSTALL_DIR)
+	echo "stepmania is already on the PATH at $(SM_INSTALL_DIR)"
 endif
 
 .PHONY: arcade-setup
@@ -32,7 +33,7 @@ arcade-setup:
 	chmod a+x "$(SM_CONFIG_DIR)/launch.sh"
 	cp -rfv ./arcade-setup/global-settings/. "$(SM_INSTALL_DIR)/"
 	mkdir -p "$(HOME)/.config/autostart"
-	cat arcade-setup/stepmania.desktop | RUNUSER=$(shell whoami) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
+	cat arcade-setup/stepmania.desktop | SM_CONFIG_DIR="$(SM_CONFIG_DIR) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
 	mkdir -p "$(HOME)/Pictures/"
 	cp -rfv ./arcade-setup/stepmania-wallpaper/ "$(HOME)"/Pictures/.
 	DISPLAY=:0 pcmanfm --set-wallpaper="$(HOME)/Pictures/stepmania-wallpaper/yellow_5.1_16:9.png"
