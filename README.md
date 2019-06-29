@@ -381,3 +381,15 @@ this will install a pre-compiled StepMania binary from [`SpottyMatt/stepmania-ra
 
 If you want to set up a different version of StepMania as an arcade console (with no guarantees that these scripts will work with your chosen version),
 just make sure that version is installed and on your `$PATH` before running `make`.
+
+There are some variables you can provide to `make` to help increase the chances of successfully working with a different StepMania:
+
+| Variable         | Purpose                                            |
+| ---------------- | -------------------------------------------------- |
+| `SM_INSTALL_DIR` | The directory that contains the `stepmania` binary |
+| `SM_CONFIG_DIR   | The directory that contains StepMania settings     |
+| `SM_BINARY_URL`  | Location of a StepMania `.deb` binary to install   |
+
+For example, to use with StepMania 5.2:
+
+	make SM_CONFIG_DIR=~/.stepmania-5.2 SM_INSTALL_DIR=/usr/local/stepmania-5.2
