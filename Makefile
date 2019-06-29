@@ -1,11 +1,15 @@
 SM_CONFIG_DIR=$(HOME)/.stepmania-5.1
-SM_INSTALL_DIR=/usr/games/stepmania
+SM_INSTALL_DIR=$(shell dirname $$(which stepmania) 2>/dev/null )
 
 .PHONY: all
-all:
+all: preflight-checks
 	$(MAKE) system-prep
 	$(MAKE) stepmania-install
 	$(MAKE) arcade-setup
+
+.PHONY: preflight-checks
+preflight-checks:
+	@if [ -z $(SM_INSTALL_DIR) ]; then echo "ERROR: stepmania is not on the PATH"; exit 1; fi
 
 .PHONY: system-prep
 system-prep:

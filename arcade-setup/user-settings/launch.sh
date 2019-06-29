@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-STEPMANIA_SETTINGS_DIR=~/.stepmania-5.1
+SM_CONFIG_DIR=~/.stepmania-5.1
 
 ####################
 # Default Preferences:
@@ -10,7 +10,7 @@ STEPMANIA_SETTINGS_DIR=~/.stepmania-5.1
 
 SHOULD_APPLY_DEFAULTS="false"
 
-if ! [ -e "${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini" ]; then
+if ! [ -e "${SM_CONFIG_DIR}/Save/Preferences.ini" ]; then
 	SHOULD_APPLY_DEFAULTS="true"
 	echo "First-ever launch; should apply defaults if present."
 fi
@@ -22,10 +22,10 @@ fi
 
 SHOULD_LOAD_KEYMAPS="false"
 
-if [ -d "${STEPMANIA_SETTINGS_DIR}/Save/Keymaps" ]; then
+if [ -d "${SM_CONFIG_DIR}/Save/Keymaps" ]; then
 	SHOULD_LOAD_KEYMAPS="true"
 else
-	echo "No named key mappings found in [${STEPMANIA_SETTINGS_DIR}/Save/Keymaps/]."
+	echo "No named key mappings found in [${SM_CONFIG_DIR}/Save/Keymaps/]."
 fi
 
 
@@ -39,7 +39,7 @@ if [ "${SHOULD_LOAD_KEYMAPS}" == "true" ] || [ "${SHOULD_APPLY_DEFAULTS}" == "tr
 	KILL_MAX=30
 
 	# "fake" launch to read SM logs to find out the actual ordering of controllers
-	/usr/local/stepmania-5.1/stepmania --verbose --debug > ${STARTUP_LOGS} 2>&1 &
+	stepmania --verbose --debug > ${STARTUP_LOGS} 2>&1 &
 	SM_DUMMY_PID=$!
 
 	STARTUP_WAIT=0
@@ -108,7 +108,7 @@ if [ "${SHOULD_LOAD_KEYMAPS}" == "true" ]; then
 
 	PLAYER_INDEX=1
 
-	for keymap in $(find ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps -type f -exec basename {} \; | sort ); do
+	for keymap in $(find ${SM_CONFIG_DIR}/Save/Keymaps -type f -exec basename {} \; | sort ); do
 
 		KEYMAP_NAME=${keymap##*-}
 		KEYMAP_NAME=${KEYMAP_NAME%%.ini}
@@ -126,7 +126,7 @@ if [ "${SHOULD_LOAD_KEYMAPS}" == "true" ]; then
 				if [ $PLAYER_INDEX -le 2 ]; then
 					# It is one of the two primary controllers.
 
-					cat ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps/${keymap} | sed "s/1_/${PLAYER_INDEX}_/" | sed "s/Joy10/Joy${JOY_INDEX}/" >> ${GENERATED_KEYMAP}
+					cat ${SM_CONFIG_DIR}/Save/Keymaps/${keymap} | sed "s/1_/${PLAYER_INDEX}_/" | sed "s/Joy10/Joy${JOY_INDEX}/" >> ${GENERATED_KEYMAP}
 					echo "Will be P${PLAYER_INDEX}."
 				elif [ $PLAYER_INDEX -le 4 ]; then
 					# It's controller 3 or 4; will be a secondary controller.
@@ -178,7 +178,7 @@ if [ "${SHOULD_LOAD_KEYMAPS}" == "true" ]; then
 							# 2_Start=:Joy14_B3
 							echo "${PLAYER_MAPPED_LINE}" | sed "s/1_/${SECONDARY_INDEX}_/" | sed "s/=Joy10/=:Joy${JOY_INDEX}/" >> ${GENERATED_KEYMAP}
 						fi
-					done < "${STEPMANIA_SETTINGS_DIR}/Save/Keymaps/${keymap}"
+					done < "${SM_CONFIG_DIR}/Save/Keymaps/${keymap}"
 
 					echo "Will be P${SECONDARY_INDEX} secondary."
 				else
@@ -198,7 +198,7 @@ if [ "${SHOULD_LOAD_KEYMAPS}" == "true" ]; then
 
 	if [ $PLAYER_INDEX -gt 1 ]; then
 		# at least one mapping was added
-		cp -f ${GENERATED_KEYMAP} ${STEPMANIA_SETTINGS_DIR}/Save/Keymaps.ini
+		cp -f ${GENERATED_KEYMAP} ${SM_CONFIG_DIR}/Save/Keymaps.ini
 	fi
 fi
 
@@ -209,8 +209,8 @@ sleep 1
 ####################
 
 if [ "${SHOULD_APPLY_DEFAULTS}" == "true" ]; then
-	cp ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini.orig
-	${STEPMANIA_SETTINGS_DIR}/Save/merge-ini.sh ${STEPMANIA_SETTINGS_DIR}/Save/Default-Preferences.ini ${STEPMANIA_SETTINGS_DIR}/Save/Preferences.ini Options
+	cp ${SM_CONFIG_DIR}/Save/Preferences.ini ${SM_CONFIG_DIR}/Save/Preferences.ini.orig
+	${SM_CONFIG_DIR}/Save/merge-ini.sh ${SM_CONFIG_DIR}/Save/Default-Preferences.ini ${SM_CONFIG_DIR}/Save/Preferences.ini Options
 fi
 
 ####################
@@ -221,7 +221,7 @@ fi
 unclutter -display :0 -noevents -grab &
 
 # start StepMania
-/usr/local/stepmania-5.1/stepmania
+stepmania
 
 # kill the thing that's hiding the cursor
 pkill unclutter
