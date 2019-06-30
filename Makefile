@@ -38,6 +38,7 @@ arcade-setup:
 	cp -rfv ./arcade-setup/user-settings/. "$(SM_CONFIG_DIR)/"
 	sed -i 's>SM_CONFIG_DIR=.*>SM_CONFIG_DIR=$(SM_CONFIG_DIR)>g' "$(SM_CONFIG_DIR)/launch.sh"
 	chmod a+x "$(SM_CONFIG_DIR)/Save/merge-ini.sh"
+	"$(SM_CONFIG_DIR)"/Save/merge-ini.sh "$(SM_CONFIG_DIR)"/Save/Default-Preferences.ini "$(SM_CONFIG_DIR)"/Save/Preferences.ini
 	chmod a+x "$(SM_CONFIG_DIR)/launch.sh"
 	sudo cp -rfv ./arcade-setup/global-settings/. "$(SM_INSTALL_DIR)/"
 	mkdir -p "$(HOME)/.config/autostart"
