@@ -1,6 +1,10 @@
+DISTRO=$(shell dpkg --status tzdata|grep Provides|cut -f2 -d'-')
+
 SM_CONFIG_DIR=$(HOME)/.stepmania-5.1
-SM_INSTALL_DIR=$(shell dirname $$(which stepmania) 2>/dev/null)
-SM_BINARY_URL=https://github.com/SpottyMatt/stepmania-raspi-deb/releases/download/v5.1.0-b2/stepmania-5.1.0-b2-20180723-armhf.deb
+SM_INSTALL_DIR=$(shell dirname $$(readlink -f $$(which stepmania)) 2>/dev/null)
+
+SM_BINARY_VERSION=5.1.0-b2
+SM_BINARY_URL=https://github.com/SpottyMatt/raspbian-stepmania-deb/releases/download/v$(SM_BINARY_VERSION)/stepmania-$(SM_BINARY_VERSION)-armhf-$(DISTRO).deb
 
 .PHONY: all
 all:
@@ -32,12 +36,12 @@ endif
 arcade-setup:
 	mkdir -p "$(SM_CONFIG_DIR)"
 	cp -rfv ./arcade-setup/user-settings/. "$(SM_CONFIG_DIR)/"
-	sed -i 's/SM_CONFIG_DIR=.*/SM_CONFIG_DIR=$(SM_CONFIG_DIR)/g' "$(SM_CONFIG_DIR)/launch.sh"
+	sed -i 's>SM_CONFIG_DIR=.*>SM_CONFIG_DIR=$(SM_CONFIG_DIR)>g' "$(SM_CONFIG_DIR)/launch.sh"
 	chmod a+x "$(SM_CONFIG_DIR)/Save/merge-ini.sh"
 	chmod a+x "$(SM_CONFIG_DIR)/launch.sh"
-	cp -rfv ./arcade-setup/global-settings/. "$(SM_INSTALL_DIR)/"
+	sudo cp -rfv ./arcade-setup/global-settings/. "$(SM_INSTALL_DIR)/"
 	mkdir -p "$(HOME)/.config/autostart"
-	cat arcade-setup/stepmania.desktop | SM_CONFIG_DIR="$(SM_CONFIG_DIR) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
+	cat arcade-setup/stepmania.desktop | SM_CONFIG_DIR="$(SM_CONFIG_DIR)" envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
 	mkdir -p "$(HOME)/Pictures/"
 	cp -rfv ./arcade-setup/stepmania-wallpaper/ "$(HOME)"/Pictures/.
 	DISPLAY=:0 pcmanfm --set-wallpaper="$(HOME)/Pictures/stepmania-wallpaper/yellow_5.1_16:9.png"
