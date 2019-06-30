@@ -377,7 +377,7 @@ StepMania Version
 -------------------------
 
 By default, if `stepmania` is not present on your Pi's `$PATH`
-this will install a pre-compiled StepMania binary from [`SpottyMatt/stepmania-raspi-deb`](https://github.com/SpottyMatt/stepmania-raspi-deb/releases).
+this will install a pre-compiled StepMania binary from [`raspbian-stepmania-deb`](https://github.com/SpottyMatt/raspbian-stepmania-deb/releases).
 
 If you want to set up a different version of StepMania as an arcade console (with no guarantees that these scripts will work with your chosen version),
 just make sure that version is installed and on your `$PATH` before running `make`.
