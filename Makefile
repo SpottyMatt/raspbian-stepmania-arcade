@@ -13,12 +13,12 @@ system-prep:
 	chmod a+x ./merge-config.sh
 	sudo ./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
 	sudo cp -fv ./system-prep/usb-audio-by-default.conf /etc/modprobe.d/.
-	[ -e "$(HOME)/.asoundrc" ] && rm "$(HOME)/.asoundrc"
+	[ -e "$(HOME)/.asoundrc" ] && rm "$(HOME)/.asoundrc" || true
 
 .PHONY: stepmania-install
 stepmania-install:
-ifeq($(SM_INSTALL_DIR),)
-	curl "$(SM_BINARY_URL)" > /tmp/stepmania.deb
+ifeq ($(SM_INSTALL_DIR),)
+	curl --location --fail "$(SM_BINARY_URL)" > /tmp/stepmania.deb
 	sudo apt-get install -f /tmp/stepmania.deb
 else
 	echo "stepmania is already on the PATH at $(SM_INSTALL_DIR)"
