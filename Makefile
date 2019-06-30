@@ -1,101 +1,50 @@
+DISTRO=$(shell dpkg --status tzdata|grep Provides|cut -f2 -d'-')
+
+SM_CONFIG_DIR=$(HOME)/.stepmania-5.1
+SM_INSTALL_DIR=$(shell dirname $$(readlink -f $$(which stepmania)) 2>/dev/null)
+
+SM_BINARY_VERSION=5.1.0-b2
+SM_BINARY_URL=https://github.com/SpottyMatt/raspbian-stepmania-deb/releases/download/v$(SM_BINARY_VERSION)/stepmania-$(SM_BINARY_VERSION)-armhf-$(DISTRO).deb
+
 .PHONY: all
 all:
 	$(MAKE) system-prep
-	$(MAKE) stepmania-prep
-	$(MAKE) stepmania-build
 	$(MAKE) stepmania-install
-
-.PHONY: build-only
-build-only:
-	$(MAKE) build-prep
-	$(MAKE) stepmania-prep
-	$(MAKE) stepmania-build
+	$(MAKE) arcade-setup
 
 .PHONY: system-prep
 system-prep:
-	$(MAKE) build-prep
 	chmod a+x ./merge-config.sh
 	sudo ./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
 	sudo cp -fv ./system-prep/usb-audio-by-default.conf /etc/modprobe.d/.
-	[ -e "$(HOME)/.asoundrc" ] && rm "$(HOME)/.asoundrc"
-
-.PHONY: build-prep
-build-prep:
-	sudo sed -i 's/#deb-src/deb-src/g' /etc/apt/sources.list
+	[ -e "$(HOME)/.asoundrc" ] && rm "$(HOME)/.asoundrc" || true
 	sudo apt-get update
 	sudo apt-get install -y \
-		binutils-dev \
-		build-essential \
-		cmake \
-		ffmpeg \
-		libasound-dev \
-		libbz2-dev \
-		libc6-dev \
-		libcairo2-dev \
-		libgdk-pixbuf2.0-dev \
-		libglew1.5-dev \
-		libglib2.0-dev \
-		libglu1-mesa-dev \
-		libgtk2.0-dev \
-		libjack0 \
-		libjack-dev \
-		libjpeg-dev \
-		libmad0-dev \
-		libogg-dev \
-		libpango1.0-dev \
-		libpng-dev \
-		libpulse-dev \
-		libudev-dev \
-		libva-dev \
-		libvorbis-dev \
-		libxrandr-dev \
-		libxtst-dev \
-		mesa-common-dev \
-		mesa-utils \
-		unclutter \
-		yasm \
-		zlib1g-dev
+		unclutter
 	sudo apt-get autoremove -y
-	sudo mkdir -p /usr/local/stepmania-5.1
-	sudo chmod a+rw /usr/local/stepmania-5.1
-
-
-.PHONY: stepmania-prep
-.ONESHELL:
-stepmania-prep:
-	git submodule init
-	git submodule update
-	cd stepmania
-	git submodule init
-	git submodule update
-	git apply ../stepmania-build/raspi-3b-arm.patch && git commit --author="raspian-3b-stepmania-arcade <SpottyMatt@gmail.com>" -a -m "Patched to enable building on ARM processors with -DARM_CPU=XXX -DARM_FPU=XXX"
-	cmake -G "Unix Makefiles" \
-	        -DWITH_CRASH_HANDLER=0 \
-	        -DWITH_SSE2=0 \
-	        -DWITH_MINIMAID=0 \
-	        -DWITH_FULL_RELEASE=1 \
-		-DCMAKE_BUILD_TYPE=Release \
-	        -DARM_CPU=cortex-a53 \
-		-DARM_FPU=neon-fp-armv8
-	cmake .
-	git reset --hard HEAD^
-
-.PHONY: stepmania-build
-stepmania-build:
-	$(MAKE) --dir stepmania
 
 .PHONY: stepmania-install
 stepmania-install:
-	$(MAKE) --dir stepmania install
-	mkdir -p "$(HOME)/.stepmania-5.1"
-	cp -rfv ./stepmania-install/user-settings/. "$(HOME)/.stepmania-5.1/"
-	chmod a+x "$(HOME)/.stepmania-5.1/Save/merge-ini.sh"
-	chmod a+x "$(HOME)/.stepmania-5.1/launch.sh"
-	cp -rfv ./stepmania-install/global-settings/. "/usr/local/stepmania-5.1/"
+ifeq ($(SM_INSTALL_DIR),)
+	curl --location --fail "$(SM_BINARY_URL)" > /tmp/stepmania.deb
+	sudo apt-get install -f /tmp/stepmania.deb
+else
+	echo "stepmania is already on the PATH at $(SM_INSTALL_DIR)"
+endif
+
+.PHONY: arcade-setup
+arcade-setup:
+	mkdir -p "$(SM_CONFIG_DIR)"
+	cp -rfv ./arcade-setup/user-settings/. "$(SM_CONFIG_DIR)/"
+	sed -i 's>SM_CONFIG_DIR=.*>SM_CONFIG_DIR=$(SM_CONFIG_DIR)>g' "$(SM_CONFIG_DIR)/launch.sh"
+	chmod a+x "$(SM_CONFIG_DIR)/Save/merge-ini.sh"
+	"$(SM_CONFIG_DIR)"/Save/merge-ini.sh "$(SM_CONFIG_DIR)"/Save/Default-Preferences.ini "$(SM_CONFIG_DIR)"/Save/Preferences.ini
+	chmod a+x "$(SM_CONFIG_DIR)/launch.sh"
+	sudo cp -rfv ./arcade-setup/global-settings/. "$(SM_INSTALL_DIR)/"
 	mkdir -p "$(HOME)/.config/autostart"
-	cat stepmania-install/stepmania.desktop | RUNUSER=$(shell whoami) envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
+	cat arcade-setup/stepmania.desktop | SM_CONFIG_DIR="$(SM_CONFIG_DIR)" envsubst > "$(HOME)/.config/autostart/stepmania.desktop"
 	mkdir -p "$(HOME)/Pictures/"
-	cp -rfv ./stepmania-install/stepmania-wallpaper/ "$(HOME)"/Pictures/.
+	cp -rfv ./arcade-setup/stepmania-wallpaper/ "$(HOME)"/Pictures/.
 	DISPLAY=:0 pcmanfm --set-wallpaper="$(HOME)/Pictures/stepmania-wallpaper/yellow_5.1_16:9.png"
 
 .PHONY: overclock-apply
