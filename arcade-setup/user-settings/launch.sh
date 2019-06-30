@@ -221,7 +221,7 @@ fi
 unclutter -display :0 -noevents -grab &
 
 # start StepMania
-stepmania
+stepmania 2>&1 | tee /tmp/stepmania.log
 
 # kill the thing that's hiding the cursor
 pkill unclutter
