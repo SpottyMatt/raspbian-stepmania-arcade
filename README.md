@@ -387,7 +387,7 @@ There are some variables you can provide to `make` to help increase the chances 
 | Variable         | Purpose                                            |
 | ---------------- | -------------------------------------------------- |
 | `SM_INSTALL_DIR` | The directory that contains the `stepmania` binary |
-| `SM_CONFIG_DIR   | The directory that contains StepMania settings     |
+| `SM_CONFIG_DIR`  | The directory that contains StepMania settings     |
 | `SM_BINARY_URL`  | Location of a StepMania `.deb` binary to install   |
 
 For example, to use with StepMania 5.2:
