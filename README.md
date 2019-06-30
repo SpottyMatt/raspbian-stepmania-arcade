@@ -320,7 +320,7 @@ Notes
 
 1. [Make Targets](#make-targets)
 2. [Performance Benchmarks](#performance-benchmarks)
-3. [Building for Other Raspberry Pi Models](#building-for-other-raspberry-pi-models)
+3. [StepMania Version](#stepmania-version)
 
 Make Targets
 -------------------------
