@@ -80,3 +80,4 @@ overclock-apply:
 .PHONY: no-turbo
 no-turbo:
 	sudo ./merge-config.sh ./performance-tune/no-turbo.config /boot/config.txt
+endif
