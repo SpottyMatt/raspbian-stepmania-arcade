@@ -1,12 +1,37 @@
 DISTRO=$(shell dpkg --status tzdata|grep Provides|cut -f2 -d'-')
 
+RPI_MODEL = $(shell ./rpi-hw-info/rpi-hw-info.py 2>/dev/null | awk -F ':' '{print $$1}' | tr '[:upper:]' '[:lower:]' )
+
+ifeq ($(RPI_MODEL),3b+)
+# RPI 3B and 3B+ are the same hardware architecture and targets
+# So we don't need to generate separate packages for them.
+# Prefer the base model "3B" for labelling when we're on a 3B+
+RPI_MODEL=3b
+endif
+
 SM_CONFIG_DIR=$(HOME)/.stepmania-5.1
 SM_INSTALL_DIR=$(shell dirname $$(readlink -f $$(which stepmania)) 2>/dev/null)
 
 SM_BINARY_VERSION=5.1.0-b2
-SM_BINARY_URL=https://github.com/SpottyMatt/raspbian-stepmania-deb/releases/download/v$(SM_BINARY_VERSION)/stepmania-$(SM_BINARY_VERSION)-armhf-$(DISTRO).deb
+SM_BINARY_URL=https://github.com/SpottyMatt/raspbian-stepmania-deb/releases/download/v$(SM_BINARY_VERSION)/stepmania-$(RPI_MODEL)_$(SM_BINARY_VERSION)_$(DISTRO).deb
 
 .PHONY: all
+
+ifeq ($(wildcard ./rpi-hw-info/rpi-hw-info.py),)
+
+all: submodules
+	$(MAKE) all
+
+submodules:
+	git submodule init rpi-hw-info
+	git submodule update rpi-hw-info
+	@ if ! [ -e ./rpi-hw-info/rpi-hw-info.py ]; then echo "Couldn't retrieve the RPi HW Info Detector's git submodule. Figure out why or run 'make RPI_MODEL=<your_model>'"; exit 1; fi
+
+%: submodules
+	$(MAKE) $@
+
+else
+
 all:
 	$(MAKE) system-prep
 	$(MAKE) stepmania-install
