@@ -44,22 +44,32 @@ if ! confirm "Continue with overclocking?"; then
 	exit 0
 fi
 
-while true; do
-	echo -e "Which Raspbery Pi is this running on?\n\t0: 3B\n\t1: 3B+"
+USER_WHICHPI=$1
 
-	read -p ": " USER_WHICHPI
+if [ -z $USER_WHICHPI ] ; then
+	while true; do
+		echo -e "Which Raspbery Pi is this running on?\n\t0: 3B\n\t1: 3B+\n\t2: 4B"
 
-	case "${USER_WHICHPI}" in
-		0)
-			WHICHPI="3b"
-			break
-		;;
-		1)
-			WHICHPI="3b+"
-			break
-		;;
-	esac
-done
+		read -p ": " USER_WHICHPI
+
+		case "${USER_WHICHPI}" in
+			0)
+				WHICHPI="3b"
+				break
+			;;
+			1)
+				WHICHPI="3b+"
+				break
+			;;
+			2)
+				WHICHPI="4b"
+				break
+			;;
+		esac
+	done
+else
+	WHICHPI=${USER_WHICHPI}
+fi
 
 cat << EOF
 ###########################################################

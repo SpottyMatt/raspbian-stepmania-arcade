@@ -1,19 +1,20 @@
 DISTRO=$(shell dpkg --status tzdata|grep Provides|cut -f2 -d'-')
 
 RPI_MODEL = $(shell ./rpi-hw-info/rpi-hw-info.py 2>/dev/null | awk -F ':' '{print $$1}' | tr '[:upper:]' '[:lower:]' )
+SM_RPI_MODEL=$(RPI_MODEL)
 
 ifeq ($(RPI_MODEL),3b+)
 # RPI 3B and 3B+ are the same hardware architecture and targets
 # So we don't need to generate separate packages for them.
 # Prefer the base model "3B" for labelling when we're on a 3B+
-RPI_MODEL=3b
+SM_RPI_MODEL=3b
 endif
 
 SM_CONFIG_DIR=$(HOME)/.stepmania-5.1
 SM_INSTALL_DIR=$(shell dirname $$(readlink -f $$(which stepmania)) 2>/dev/null)
 
 SM_BINARY_VERSION=5.1.0-b2
-SM_BINARY_URL=https://github.com/SpottyMatt/raspbian-stepmania-deb/releases/download/v$(SM_BINARY_VERSION)/stepmania-$(RPI_MODEL)_$(SM_BINARY_VERSION)_$(DISTRO).deb
+SM_BINARY_URL=https://github.com/SpottyMatt/raspbian-stepmania-deb/releases/download/v$(SM_BINARY_VERSION)/stepmania-$(SM_RPI_MODEL)_$(SM_BINARY_VERSION)_$(DISTRO).deb
 
 .PHONY: all
 
@@ -40,7 +41,7 @@ all:
 .PHONY: system-prep
 system-prep:
 	chmod a+x ./merge-config.sh
-	sudo ./merge-config.sh ./performance-tune/raspi-3b-tune.config /boot/config.txt
+	sudo ./merge-config.sh ./performance-tune/raspi-$(RPI_MODEL)-tune.config /boot/config.txt
 	sudo cp -fv ./system-prep/usb-audio-by-default.conf /etc/modprobe.d/.
 	[ -e "$(HOME)/.asoundrc" ] && rm "$(HOME)/.asoundrc" || true
 	sudo apt-get update
@@ -74,8 +75,8 @@ arcade-setup:
 
 .PHONY: overclock-apply
 overclock-apply:
-	chmod a+x ./performance-tune/overclock-pi3.sh
-	./performance-tune/overclock-pi3.sh
+	chmod a+x ./performance-tune/overclock-pi.sh
+	./performance-tune/overclock-pi.sh $(RPI_MODEL)
 
 .PHONY: no-turbo
 no-turbo:
