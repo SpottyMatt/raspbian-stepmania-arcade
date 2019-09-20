@@ -20,6 +20,7 @@ Prerequisites
 1. A supported [Raspberry Pi model](https://www.raspberrypi.org/products/)
 	1. 3B
 	2. 3B+
+	3. 4B
 2. An installed & working [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) operating system, Stretch (v9) or later.
 3. A [USB sound card that works out-of-the-box with the Raspberry Pi](https://learn.adafruit.com/usb-audio-cards-with-a-raspberry-pi?view=all)
 4. (Optional) A working StepMania binary for Raspberry Pi, on the `$PATH`
@@ -112,6 +113,10 @@ The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I 
 | sdram_freq           | 500     | 700        |
 | over_voltage         | 0       | 3          |
 | over_voltage_sdram   | 0       | 3          |
+
+### Raspberry Pi 4B
+
+(no data yet)
 
 USB Audio
 =========================
@@ -372,6 +377,10 @@ Performance Benchmarks
 | 1680 x 1050       | 512          | No           | 32        |
 | 1680 x 1050       | 512          | Yes          | 37        |
 | 1680 x 1050       | 1024         | Yes          | 33        |
+
+### Raspberry Pi 4B
+
+(no data yet)
 
 StepMania Version
 -------------------------
