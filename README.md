@@ -380,7 +380,11 @@ Performance Benchmarks
 
 ### Raspberry Pi 4B
 
-(no data yet)
+| Screen Resolution | Texture Size | Overclocked? | Framerate |
+| ----------------- | ------------ | ------------ | --------- |
+| 1280 x 720        | 1024         | No           | 57        |
+| 1680 x 900        | 1024         | No           | 48        |
+| 1680 x 1050       | 1024         | No           | 40        |
 
 StepMania Version
 -------------------------

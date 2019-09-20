@@ -53,7 +53,8 @@ system-prep:
 stepmania-install:
 ifeq ($(SM_INSTALL_DIR),)
 	curl --location --fail "$(SM_BINARY_URL)" > /tmp/stepmania.deb
-	sudo apt-get install -f /tmp/stepmania.deb
+	sudo dpkg --install /tmp/stepmania.deb
+	sudo apt-get install --fix-broken -y
 else
 	echo "stepmania is already on the PATH at $(SM_INSTALL_DIR)"
 endif
