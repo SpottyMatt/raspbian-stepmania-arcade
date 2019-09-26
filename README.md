@@ -364,6 +364,8 @@ Use this if you expect the Pi to be turned on and NOT running StepMania for sign
 Performance Benchmarks
 -------------------------
 
+_Note:_ These were all done with "Fast Note Rendering" enabled. Framerate was unstable by as much as 20fps without that option.
+
 ### Rasbperry Pi 3B
 
 | Screen Resolution | Texture Size | Overclocked? | Framerate |
@@ -383,8 +385,12 @@ Performance Benchmarks
 | Screen Resolution | Texture Size | Overclocked? | Framerate |
 | ----------------- | ------------ | ------------ | --------- |
 | 1280 x 720        | 1024         | No           | 57        |
+| 1280 x 720        | 1024         | Yes          | ??        |
 | 1680 x 900        | 1024         | No           | 48        |
+| 1680 x 900        | 1024         | Yes          | ??        |
 | 1680 x 1050       | 1024         | No           | 40        |
+| 1680 x 1050       | 512          | Yes          | 47        |
+| 1680 x 1050       | 1024         | Yes          | 47        |
 
 StepMania Version
 -------------------------
