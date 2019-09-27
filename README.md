@@ -116,7 +116,15 @@ The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I 
 
 ### Raspberry Pi 4B
 
-(no data yet)
+| Setting              | Default | Max Stable |
+| -------------------- | ------- | ---------- |
+| arm_freq             | 1500    | 1750       |
+| gpu_freq             | 500     | 600        |
+| sdram_freq           | 3200    | 3200*      |
+| over_voltage         | 0       | 4          |
+| over_voltage_sdram   | 0       | 3          |
+
+* SDRAM is not overclockable on the Raspbery Pi 4B
 
 USB Audio
 =========================
