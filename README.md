@@ -374,23 +374,28 @@ _Note:_ These were all done with "Fast Note Rendering" enabled. Framerate was un
 
 ### Rasbperry Pi 3B+
 
-| Screen Resolution | Texture Size | Overclocked? | Framerate |
-| ----------------- | ------------ | ------------ | --------- |
-| 1680 x 1050       | 512          | No           | 32        |
-| 1680 x 1050       | 512          | Yes          | 37        |
-| 1680 x 1050       | 1024         | Yes          | 33        |
+| Screen Resolution | Texture Size | Overclocked? | Framerate | Aspect Ratio |
+| ----------------- | ------------ | ------------ | --------- | ------------ |
+| 1280 x 720        | 1024         | Yes          | 49        | 16:9         |
+| 1600 x 900        | 1024         | Yes          | 35        | 16:9         |
+| 1680 x 1050       | 512          | No           | 32        | 16:10        |
+| 1680 x 1050       | 512          | Yes          | 37        | 16:10        |
+| 1680 x 1050       | 1024         | Yes          | 33        | 16:10        |
 
 ### Raspberry Pi 4B
 
-| Screen Resolution | Texture Size | Overclocked? | Framerate |
-| ----------------- | ------------ | ------------ | --------- |
-| 1280 x 720        | 1024         | No           | 57        |
-| 1280 x 720        | 1024         | Yes          | ??        |
-| 1680 x 900        | 1024         | No           | 48        |
-| 1680 x 900        | 1024         | Yes          | ??        |
-| 1680 x 1050       | 1024         | No           | 40        |
-| 1680 x 1050       | 512          | Yes          | 47        |
-| 1680 x 1050       | 1024         | Yes          | 47        |
+| Screen Resolution | Texture Size | Overclocked? | Framerate | Aspect Ratio |
+| ----------------- | ------------ | ------------ | --------- | ------------ |
+| 1280 x 720        | 1024         | No           | 57        | 16:9         |
+| 1280 x 720        | 512          | Yes          | 58        | 16:9         |
+| 1280 x 720        | 1024         | Yes          | 57        | 16:9         |
+| 1680 x 900        | 1024         | No           | 48        | 16:9         |
+| 1680 x 900        | 1024         | Yes          | 56        | 16:9         |
+| 1680 x 900        | 2048         | Yes          | 56        | 16:9         |
+| 1680 x 1050       | 1024         | No           | 40        | 16:10        |
+| 1680 x 1050       | 512          | Yes          | 47        | 16:10        |
+| 1680 x 1050       | 1024         | Yes          | 47        | 16:10        |
+| 1920 x 1080       | 1024         | Yes          | 41        | 16:9         |
 
 StepMania Version
 -------------------------
