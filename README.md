@@ -20,6 +20,7 @@ Prerequisites
 1. A supported [Raspberry Pi model](https://www.raspberrypi.org/products/)
 	1. 3B
 	2. 3B+
+	3. 4B
 2. An installed & working [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) operating system, Stretch (v9) or later.
 3. A [USB sound card that works out-of-the-box with the Raspberry Pi](https://learn.adafruit.com/usb-audio-cards-with-a-raspberry-pi?view=all)
 4. (Optional) A working StepMania binary for Raspberry Pi, on the `$PATH`
@@ -112,6 +113,18 @@ The "Max stable" settings **WILL VARY BETWEEN DIFFERENT BOARDS** and are what I 
 | sdram_freq           | 500     | 700        |
 | over_voltage         | 0       | 3          |
 | over_voltage_sdram   | 0       | 3          |
+
+### Raspberry Pi 4B
+
+| Setting              | Default | Max Stable |
+| -------------------- | ------- | ---------- |
+| arm_freq             | 1500    | 1750       |
+| gpu_freq             | 500     | 600        |
+| sdram_freq           | 3200    | 3200*      |
+| over_voltage         | 0       | 4          |
+| over_voltage_sdram   | 0       | 3          |
+
+* SDRAM is not overclockable on the Raspbery Pi 4B
 
 USB Audio
 =========================
@@ -359,6 +372,8 @@ Use this if you expect the Pi to be turned on and NOT running StepMania for sign
 Performance Benchmarks
 -------------------------
 
+_Note:_ These were all done with "Fast Note Rendering" enabled. Framerate was unstable by as much as 20fps without that option.
+
 ### Rasbperry Pi 3B
 
 | Screen Resolution | Texture Size | Overclocked? | Framerate |
@@ -367,11 +382,28 @@ Performance Benchmarks
 
 ### Rasbperry Pi 3B+
 
-| Screen Resolution | Texture Size | Overclocked? | Framerate |
-| ----------------- | ------------ | ------------ | --------- |
-| 1680 x 1050       | 512          | No           | 32        |
-| 1680 x 1050       | 512          | Yes          | 37        |
-| 1680 x 1050       | 1024         | Yes          | 33        |
+| Screen Resolution | Texture Size | Overclocked? | Framerate | Aspect Ratio |
+| ----------------- | ------------ | ------------ | --------- | ------------ |
+| 1280 x 720        | 1024         | Yes          | 49        | 16:9         |
+| 1600 x 900        | 1024         | Yes          | 35        | 16:9         |
+| 1680 x 1050       | 512          | No           | 32        | 16:10        |
+| 1680 x 1050       | 512          | Yes          | 37        | 16:10        |
+| 1680 x 1050       | 1024         | Yes          | 33        | 16:10        |
+
+### Raspberry Pi 4B
+
+| Screen Resolution | Texture Size | Overclocked? | Framerate | Aspect Ratio |
+| ----------------- | ------------ | ------------ | --------- | ------------ |
+| 1280 x 720        | 1024         | No           | 57        | 16:9         |
+| 1280 x 720        | 512          | Yes          | 58        | 16:9         |
+| 1280 x 720        | 1024         | Yes          | 57        | 16:9         |
+| 1680 x 900        | 1024         | No           | 48        | 16:9         |
+| 1680 x 900        | 1024         | Yes          | 56        | 16:9         |
+| 1680 x 900        | 2048         | Yes          | 56        | 16:9         |
+| 1680 x 1050       | 1024         | No           | 40        | 16:10        |
+| 1680 x 1050       | 512          | Yes          | 47        | 16:10        |
+| 1680 x 1050       | 1024         | Yes          | 47        | 16:10        |
+| 1920 x 1080       | 1024         | Yes          | 41        | 16:9         |
 
 StepMania Version
 -------------------------
