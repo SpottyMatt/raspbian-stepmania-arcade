@@ -41,7 +41,7 @@ all:
 .PHONY: system-prep
 system-prep:
 	chmod a+x ./merge-config.sh
-	sudo ./merge-config.sh ./performance-tune/raspi-$(RPI_MODEL)-tune.config /boot/config.txt
+	sudo ./merge-config.sh ./performance-tune/raspi-$(SM_RPI_MODEL)-tune.config /boot/config.txt
 	sudo cp -fv ./system-prep/usb-audio-by-default.conf /etc/modprobe.d/.
 	[ -e "$(HOME)/.asoundrc" ] && rm "$(HOME)/.asoundrc" || true
 	sudo apt-get update
